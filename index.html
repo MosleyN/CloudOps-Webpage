@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS SOA-C03 CloudOps Engineer — Complete Study Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&family=Lora:wght@400;600&display=swap');
+:root{--bg:#070b12;--surf:#0d1220;--surf2:#121829;--bdr:#1c2640;--a1:#e8732a;--a2:#4d9de0;--a3:#2dd4a0;--a4:#b06cf5;--a5:#f04e6e;--a6:#f5c842;--tx:#dde4f0;--tx2:#8b97b3;--tx3:#556080;--cod:#0a0f1a;--sw:268px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:15px}
+body{font-family:'Lora',serif;background:var(--bg);color:var(--tx);line-height:1.75}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+#pg{position:fixed;top:0;left:var(--sw);right:0;height:2px;background:var(--bdr);z-index:300}
+#pgf{height:100%;background:linear-gradient(90deg,var(--a1),var(--a6));width:0%;transition:width .1s}
+#sb{position:fixed;top:0;left:0;width:var(--sw);height:100vh;background:var(--surf);border-right:1px solid var(--bdr);overflow-y:auto;z-index:200}
+#sb::-webkit-scrollbar{width:3px}
+.sb-top{padding:20px 20px 16px;border-bottom:1px solid var(--bdr);position:sticky;top:0;background:var(--surf);z-index:1}
+.sb-top .cert{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--a1);margin-bottom:4px}
+.sb-top h2{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--tx);line-height:1.3}
+.sw{padding:12px 16px 8px;border-bottom:1px solid var(--bdr)}
+#srch{width:100%;padding:6px 10px;background:var(--surf2);border:1px solid var(--bdr);border-radius:4px;color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:11px;outline:none}
+#srch::placeholder{color:var(--tx3)}#srch:focus{border-color:var(--a2)}
+.sb-grp{padding:12px 20px 3px;font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--tx3)}
+#sb a{display:flex;align-items:center;gap:7px;padding:5px 20px;color:var(--tx2);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:11px;border-left:2px solid transparent;transition:all .12s}
+#sb a .d{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:var(--tx3)}
+#sb a:hover{color:var(--tx);background:rgba(255,255,255,.03)}
+#sb a.active{color:var(--tx);border-left-color:var(--a1);background:rgba(232,115,42,.06)}
+#sb a.active .d{background:var(--a1)}
+#sb a.sub{padding-left:34px;font-size:10px;color:var(--tx3)}
+#sb a.sub:hover{color:var(--tx2)}
+.c1{color:var(--a1)!important}.c2{color:var(--a2)!important}.c3{color:var(--a3)!important}.c4{color:var(--a4)!important}.c5{color:var(--a5)!important}
+#main{margin-left:var(--sw)}
+.hero{position:relative;overflow:hidden;padding:64px 60px 50px;background:var(--surf);border-bottom:1px solid var(--bdr)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 400px at 80% -10%,rgba(232,115,42,.07) 0%,transparent 70%),radial-gradient(ellipse 400px 300px at 10% 110%,rgba(77,157,224,.05) 0%,transparent 70%);pointer-events:none}
+.hwm{position:absolute;bottom:-20px;right:20px;font-family:'Syne',sans-serif;font-size:150px;font-weight:800;color:rgba(255,255,255,.018);pointer-events:none;user-select:none;line-height:1}
+.hbdg{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(232,115,42,.4);background:rgba(232,115,42,.08);border-radius:3px;padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--a1);margin-bottom:20px}
+.hero h1{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;line-height:1.1;color:#fff;margin-bottom:16px;max-width:640px}
+.hero h1 span{color:var(--a1)}
+.hero p.sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2);max-width:560px;line-height:1.7;margin-bottom:32px}
+.hstats{display:flex;gap:44px;flex-wrap:wrap}
+.hstats .v{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--a1);line-height:1}
+.hstats .l{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.wbar{display:flex;height:34px;border-bottom:1px solid var(--bdr)}
+.ws{display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.06em}
+.w1{flex:22;background:rgba(232,115,42,.55)}.w2{flex:22;background:rgba(77,157,224,.55)}.w3{flex:22;background:rgba(45,212,160,.5)}.w4{flex:16;background:rgba(176,108,245,.5)}.w5{flex:18;background:rgba(240,78,110,.5)}
+.cnt{padding:0 60px 100px}
+.dom{margin-top:68px}
+.dh{display:flex;align-items:flex-start;gap:20px;padding-bottom:26px;margin-bottom:32px;border-bottom:1px solid var(--bdr)}
+.dnum{flex-shrink:0;width:58px;height:58px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600}
+.n1{background:rgba(232,115,42,.12);color:var(--a1);border:1px solid rgba(232,115,42,.3)}
+.n2{background:rgba(77,157,224,.12);color:var(--a2);border:1px solid rgba(77,157,224,.3)}
+.n3{background:rgba(45,212,160,.12);color:var(--a3);border:1px solid rgba(45,212,160,.3)}
+.n4{background:rgba(176,108,245,.12);color:var(--a4);border:1px solid rgba(176,108,245,.3)}
+.n5{background:rgba(240,78,110,.12);color:var(--a5);border:1px solid rgba(240,78,110,.3)}
+.dtit h2{font-family:'Syne',sans-serif;font-size:25px;font-weight:800;color:#fff;margin-bottom:5px}
+.dwt{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3)}
+.tdv{display:flex;align-items:center;gap:12px;margin:36px 0 18px}
+.tdv .tl{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--a1);white-space:nowrap}
+.tdv::after{content:'';flex:1;height:1px;background:var(--bdr)}
+h3{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:var(--tx);margin:28px 0 12px}
+h4{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);margin:22px 0 9px}
+p{color:var(--tx2);margin-bottom:12px;font-size:14px}
+p strong,li strong{color:var(--tx);font-style:normal}
+ul,ol{padding-left:20px;margin-bottom:12px}
+li{color:var(--tx2);margin-bottom:6px;font-size:13.5px}
+a{color:var(--a2);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:'JetBrains Mono',monospace;background:rgba(77,157,224,.1);border:1px solid rgba(77,157,224,.2);border-radius:3px;padding:1px 5px;font-size:11px;color:#93c5fd}
+pre{background:var(--cod);border:1px solid var(--bdr);border-radius:7px;padding:16px 20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.65;color:#a5d6ff;margin:14px 0}
+pre .c{color:#556080}pre .s{color:#9dd99d}pre .p{color:#79c0ff}pre .n{color:#f0883e}
+.tw{overflow-x:auto;margin:14px 0;border-radius:6px;border:1px solid var(--bdr)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--surf2);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);padding:10px 14px;text-align:left;border-bottom:1px solid var(--bdr);white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid rgba(28,38,64,.5);color:var(--tx2);vertical-align:top;font-size:12.5px}
+td strong{color:var(--tx)}tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.012)}
+.co{border-radius:6px;padding:12px 16px;margin:14px 0;border-left:3px solid;font-size:12.5px;line-height:1.65}
+.co strong{color:inherit}
+.ci{background:rgba(77,157,224,.07);border-color:var(--a2);color:#93c5fd}
+.cw{background:rgba(245,200,66,.07);border-color:var(--a6);color:#fcd34d}
+.cs{background:rgba(45,212,160,.07);border-color:var(--a3);color:#6ee7b7}
+.cd{background:rgba(240,78,110,.07);border-color:var(--a5);color:#fda4af}
+.cp{background:rgba(176,108,245,.07);border-color:var(--a4);color:#d8b4fe}
+.diag{background:var(--cod);border:1px solid var(--bdr);border-radius:7px;padding:18px;overflow-x:auto;margin:14px 0}
+.diag pre{background:transparent;border:none;padding:0;margin:0;color:#7dd3fc;white-space:pre}
+.dtree{background:var(--cod);border:1px solid var(--bdr);border-radius:7px;padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#7dd3fc;line-height:1.8;white-space:pre;overflow-x:auto;margin:14px 0}
+.rb{background:var(--surf2);border:1px solid var(--bdr);border-radius:7px;overflow:hidden;margin:18px 0}
+.rbh{background:rgba(232,115,42,.07);border-bottom:1px solid var(--bdr);padding:11px 18px;display:flex;align-items:center;gap:10px}
+.rbh h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--a1);text-transform:uppercase;margin:0}
+.rbb{padding:16px 18px}
+.rbs{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.rbs:last-child{margin-bottom:0}
+.rbn{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:rgba(232,115,42,.14);border:1px solid rgba(232,115,42,.3);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--a1)}
+.rbc{flex:1;font-size:12.5px;color:var(--tx2);line-height:1.65}.rbc strong{color:var(--tx)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.card{background:var(--surf2);border:1px solid var(--bdr);border-radius:6px;padding:14px}
+.card h4{font-size:10px;margin:0 0 7px}.card p{font-size:12px;margin:0}.card ul{margin:0;padding-left:14px}.card li{font-size:12px;margin-bottom:3px}
+.tag{display:inline-block;padding:2px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px;margin:2px}
+.to{background:rgba(232,115,42,.14);color:var(--a1);border:1px solid rgba(232,115,42,.3)}
+.tb{background:rgba(77,157,224,.14);color:#93c5fd;border:1px solid rgba(77,157,224,.3)}
+.tg{background:rgba(45,212,160,.14);color:#6ee7b7;border:1px solid rgba(45,212,160,.3)}
+.tp{background:rgba(176,108,245,.14);color:#d8b4fe;border:1px solid rgba(176,108,245,.3)}
+.tr{background:rgba(240,78,110,.14);color:#fda4af;border:1px solid rgba(240,78,110,.3)}
+.ty{background:rgba(245,200,66,.14);color:var(--a6);border:1px solid rgba(245,200,66,.3)}
+.eq{background:var(--surf2);border:1px solid var(--bdr);border-radius:7px;padding:20px 24px;margin:20px 0}
+.qlb{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--a6);margin-bottom:10px}
+.qt{font-size:14px;color:var(--tx);margin-bottom:14px;line-height:1.65;font-weight:600;font-family:'Syne',sans-serif}
+.qo{list-style:none;padding:0;margin:0}
+.qo li{padding:8px 12px;border:1px solid var(--bdr);border-radius:4px;margin-bottom:6px;cursor:pointer;transition:all .12s;font-size:12.5px;color:var(--tx2);display:flex;gap:8px;align-items:flex-start}
+.qo li .ol{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);flex-shrink:0;margin-top:1px}
+.qo li:hover{border-color:var(--a2);color:var(--tx)}
+.qo li.cor{background:rgba(45,212,160,.07);border-color:var(--a3);color:#6ee7b7}
+.qo li.wro{background:rgba(240,78,110,.06);border-color:var(--a5);color:#fda4af}
+.qa{display:none;margin-top:12px;padding:12px 14px;background:rgba(45,212,160,.06);border:1px solid rgba(45,212,160,.2);border-radius:4px;font-size:12.5px;color:#a7f3d0;line-height:1.7}
+.qa.show{display:block}.qa strong{color:#6ee7b7}
+.sbtn{background:none;border:1px solid var(--bdr);color:var(--tx3);padding:5px 12px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer;transition:all .12s;margin-top:10px}
+.sbtn:hover{border-color:var(--a2);color:var(--a2)}
+.tips{background:var(--surf2);border:1px solid rgba(245,200,66,.25);border-radius:7px;padding:18px 22px;margin:24px 0}
+.tph{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--a6);margin-bottom:12px}
+.tips ul{margin:0;padding-left:16px}.tips li{font-size:12.5px;color:var(--tx2);margin-bottom:7px}.tips li strong{color:var(--a6)}
+#st{position:fixed;bottom:24px;right:24px;width:40px;height:40px;border-radius:8px;background:var(--a1);color:#fff;border:none;cursor:pointer;font-size:18px;z-index:400;opacity:0;transition:opacity .25s;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(232,115,42,.4)}
+#st.show{opacity:1}
+@media(max-width:840px){#sb{display:none}#main{margin-left:0}.hero{padding:36px 22px 28px}.hero h1{font-size:26px}.cnt{padding:0 22px 60px}#pg{left:0}.g2,.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="pg"><div id="pgf"></div></div>
+
+<nav id="sb">
+  <div class="sb-top">
+    <div class="cert">AWS Certification</div>
+    <h2>CloudOps Engineer<br>Associate SOA-C03</h2>
+  </div>
+  <div class="sw"><input type="text" id="srch" placeholder="Search sections…" oninput="filterNav(this.value)"></div>
+  <div class="sb-grp">Overview</div>
+  <a href="#overview"><span class="d"></span>Exam Overview</a>
+  <a href="#gaps"><span class="d"></span>Gap Analysis</a>
+  <div class="sb-grp c1">Domain 1 — 22%</div>
+  <a href="#d1"><span class="d c1"></span>Monitoring &amp; Logging</a>
+  <a href="#d1-cw" class="sub">CloudWatch Architecture</a>
+  <a href="#d1-agent" class="sub">CW Agent &amp; Containers</a>
+  <a href="#d1-alarms" class="sub">Alarms &amp; Composite</a>
+  <a href="#d1-logs" class="sub">Logs Insights &amp; Filters</a>
+  <a href="#d1-ct" class="sub">CloudTrail Auditing</a>
+  <a href="#d1-eb" class="sub">EventBridge Patterns</a>
+  <a href="#d1-ssm" class="sub">SSM Automation</a>
+  <a href="#d1-xray" class="sub">X-Ray &amp; ServiceLens</a>
+  <a href="#d1-perf" class="sub">Performance Optimization</a>
+  <a href="#d1-prom" class="sub">Prometheus &amp; Grafana</a>
+  <a href="#d1-incident" class="sub">Incident Response</a>
+  <a href="#d1-tips" class="sub">Exam Tips &amp; Questions</a>
+  <div class="sb-grp c2">Domain 2 — 22%</div>
+  <a href="#d2"><span class="d c2"></span>Reliability &amp; Business Continuity</a>
+  <a href="#d2-asg" class="sub">Auto Scaling All Types</a>
+  <a href="#d2-elb" class="sub">ELB Types &amp; Health Checks</a>
+  <a href="#d2-ha" class="sub">Multi-AZ Architecture</a>
+  <a href="#d2-rds" class="sub">RDS &amp; Aurora HA</a>
+  <a href="#d2-backup" class="sub">Backup &amp; Restore</a>
+  <a href="#d2-dr" class="sub">Disaster Recovery</a>
+  <a href="#d2-tips" class="sub">Exam Tips &amp; Questions</a>
+  <div class="sb-grp c3">Domain 3 — 22%</div>
+  <a href="#d3"><span class="d c3"></span>Deployment &amp; Automation</a>
+  <a href="#d3-cfn" class="sub">CloudFormation Guide</a>
+  <a href="#d3-cdk" class="sub">CDK, SAM &amp; IaC</a>
+  <a href="#d3-ami" class="sub">AMI &amp; Image Builder</a>
+  <a href="#d3-containers" class="sub">Container Deployments</a>
+  <a href="#d3-evtauto" class="sub">Event-Driven Automation</a>
+  <a href="#d3-deploy" class="sub">Deployment Strategies</a>
+  <a href="#d3-tips" class="sub">Exam Tips &amp; Questions</a>
+  <div class="sb-grp c4">Domain 4 — 16%</div>
+  <a href="#d4"><span class="d c4"></span>Security &amp; Compliance</a>
+  <a href="#d4-iam" class="sub">IAM Deep Dive</a>
+  <a href="#d4-scp" class="sub">SCPs &amp; Multi-Account</a>
+  <a href="#d4-kms" class="sub">KMS Encryption</a>
+  <a href="#d4-acm" class="sub">ACM &amp; In-Transit</a>
+  <a href="#d4-secrets" class="sub">Secrets &amp; Parameters</a>
+  <a href="#d4-detective" class="sub">Detective Controls</a>
+  <a href="#d4-waf" class="sub">WAF, Shield &amp; Network FW</a>
+  <a href="#d4-tips" class="sub">Exam Tips &amp; Questions</a>
+  <div class="sb-grp c5">Domain 5 — 18%</div>
+  <a href="#d5"><span class="d c5"></span>Networking &amp; Content Delivery</a>
+  <a href="#d5-vpc" class="sub">VPC Architecture</a>
+  <a href="#d5-connect" class="sub">VPC Connectivity</a>
+  <a href="#d5-cf" class="sub">CloudFront Deep Dive</a>
+  <a href="#d5-ga" class="sub">Global Accelerator</a>
+  <a href="#d5-dns" class="sub">Route 53 &amp; DNS</a>
+  <a href="#d5-hybrid" class="sub">Hybrid Connectivity</a>
+  <a href="#d5-ts" class="sub">Network Troubleshooting</a>
+  <a href="#d5-tips" class="sub">Exam Tips &amp; Questions</a>
+  <div class="sb-grp">Reference</div>
+  <a href="#cost"><span class="d"></span>Cost &amp; Financial Mgmt</a>
+  <a href="#services"><span class="d"></span>In-Scope Services</a>
+</nav>
+
+<main id="main">
+<section class="hero" id="overview">
+  <div class="hwm">SOA-C03</div>
+  <div class="hbdg">✦ UPGRADED — FULLY SOA-C03 ALIGNED</div>
+  <h1>AWS <span>CloudOps Engineer</span><br>Associate — Complete Study Guide</h1>
+  <p class="sub">Every domain, task, and skill from the official SOA-C03 exam guide. Runbooks · Decision trees · Troubleshooting matrices · Performance guides · 50+ exam-ready scenario questions.</p>
+  <div class="hstats">
+    <div><div class="v">65</div><div class="l">Exam Questions</div></div>
+    <div><div class="v">720</div><div class="l">Passing Score</div></div>
+    <div><div class="v">5</div><div class="l">Domains</div></div>
+    <div><div class="v">130m</div><div class="l">Duration</div></div>
+    <div><div class="v">50+</div><div class="l">Practice Qs</div></div>
+  </div>
+</section>
+<div class="wbar">
+  <div class="ws w1">D1 — 22%</div><div class="ws w2">D2 — 22%</div>
+  <div class="ws w3">D3 — 22%</div><div class="ws w4">D4 — 16%</div><div class="ws w5">D5 — 18%</div>
+</div>
+<div class="cnt">
+
+<style>
+/* ── GAP ANALYSIS COLLAPSIBLE ── */
+.gap-wrap{margin-top:52px}
+.gap-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;background:none;border:1px solid rgba(245,200,66,.3);
+  border-radius:7px;padding:14px 20px;cursor:pointer;
+  text-align:left;transition:all .2s;
+}
+.gap-toggle:hover{background:rgba(245,200,66,.05);border-color:rgba(245,200,66,.5)}
+.gap-toggle[aria-expanded="true"]{
+  border-bottom-left-radius:0;border-bottom-right-radius:0;
+  background:rgba(245,200,66,.06);border-color:rgba(245,200,66,.45);
+}
+.gap-toggle-left{display:flex;align-items:center;gap:12px}
+.gap-toggle-icon{font-size:15px;line-height:1}
+.gap-toggle-title{
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--a6);
+}
+.gap-toggle-meta{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--tx3);margin-left:4px;
+}
+.gap-toggle-chevron{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--a6);transition:transform .25s;flex-shrink:0;
+}
+.gap-toggle[aria-expanded="true"] .gap-toggle-chevron{transform:rotate(180deg)}
+.gap-body{
+  display:none;
+  border:1px solid rgba(245,200,66,.35);border-top:none;
+  border-bottom-left-radius:7px;border-bottom-right-radius:7px;
+  padding:20px 20px 6px;
+  background:rgba(245,200,66,.025);
+}
+.gap-body.open{display:block;animation:gapIn .2s ease}
+@keyframes gapIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
+<section id="gaps" class="gap-wrap">
+  <button class="gap-toggle" onclick="toggleGap(this)" aria-expanded="false">
+    <span class="gap-toggle-left">
+      <span class="gap-toggle-icon">📋</span>
+      <span>
+        <span class="gap-toggle-title">Gap Analysis: What's New in This Upgrade</span>
+        <span class="gap-toggle-meta">— click to expand</span>
+      </span>
+    </span>
+    <span class="gap-toggle-chevron">▼</span>
+  </button>
+  <div class="gap-body" id="gap-body">
+    <p style="font-size:13px;color:var(--tx2);margin-bottom:16px">This rebuild fills every gap vs. the official SOA-C03 exam guide, adds 3× more exam questions, and adds operational runbooks absent from the original.</p>
+    <div class="g3">
+      <div class="card"><h4 style="color:var(--a1)">Domain 1 Additions</h4><ul><li>AWS X-Ray &amp; ServiceLens</li><li>Container metrics ECS/EKS</li><li>Anomaly Detection alarms</li><li>CloudWatch Live Tail</li><li>Full incident response workflow</li><li>CloudWatch Network Monitor</li></ul></div>
+      <div class="card"><h4 style="color:var(--a2)">Domain 2 Additions</h4><ul><li>All 4 ELB types (ALB/NLB/CLB/GWLB)</li><li>Aurora HA vs RDS HA</li><li>EFS &amp; FSx backup strategies</li><li>Warm pool operational guide</li><li>ARC routing controls depth</li><li>ElastiCache HA patterns</li></ul></div>
+      <div class="card"><h4 style="color:var(--a3)">Domain 3 Additions</h4><ul><li>SAM framework coverage</li><li>ECR/ECS/EKS deployments</li><li>Step Functions remediation</li><li>DataSync vs Storage Gateway</li><li>CFN Guard policy-as-code</li><li>Deployment strategy matrix</li></ul></div>
+      <div class="card"><h4 style="color:var(--a4)">Domain 4 Additions</h4><ul><li>WAF &amp; managed rule groups</li><li>Shield Standard vs Advanced</li><li>AWS Network Firewall config</li><li>Control Tower governance</li><li>Trusted Advisor remediation</li><li>Macie data classification</li></ul></div>
+      <div class="card"><h4 style="color:var(--a5)">Domain 5 Additions</h4><ul><li>VPC IPAM management</li><li>Client VPN operational guide</li><li>Hybrid connectivity troubleshooting</li><li>WAF log analysis</li><li>ALB access log field reference</li><li>GWLB for appliances</li></ul></div>
+      <div class="card"><h4 style="color:var(--a6)">Cross-Domain Additions</h4><ul><li>Cost &amp; Financial Management section</li><li>50+ scenario-based exam questions</li><li>Per-domain exam tips &amp; traps</li><li>Sidebar search functionality</li><li>Real-world operational runbooks</li><li>Full in-scope services reference</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ DOMAIN 1 ══════════ -->
+<section class="dom" id="d1">
+<div class="dh"><div class="dnum n1">D1</div><div class="dtit"><h2>Monitoring, Logging, Analysis, Remediation &amp; Performance Optimization</h2><div class="dwt">22% of scored content · Tasks 1.1 / 1.2 / 1.3 · Skills 1.1.1–1.3.6</div></div></div>
+
+<div id="d1-cw">
+<div class="tdv"><span class="tl">Task 1.1 — Metrics, Alarms &amp; Filters</span></div>
+<h3>CloudWatch Architecture &amp; Data Model</h3>
+<p>CloudWatch is the primary observability plane. Understanding the hierarchy is fundamental: <strong>Namespace → Metric → Dimensions → Statistics → Periods</strong>.</p>
+<div class="diag"><pre>
+Namespace: "AWS/EC2"  |  "MyApp/Production" (custom)
+  └── Metric: "CPUUtilization"
+        └── Dimensions: {InstanceId: "i-abc", AutoScalingGroupName: "web-asg"}
+              └── DataPoints: [(timestamp, value, unit), ...]
+                    └── Statistics: Average | Min | Max | Sum | SampleCount
+                          └── Period: 60s | 300s (min=1s for high-resolution)
+
+Retention:   High-res custom (1s) → 3h    |  1-min data → 15 days
+             5-min data → 63 days          |  1-hour data → 15 months</pre></div>
+<div class="g2">
+<div class="card"><h4>Standard Monitoring</h4><p>5-minute granularity, free. EC2 default metrics: CPUUtilization, NetworkIn/Out, DiskReadOps, StatusCheckFailed. <strong>Does NOT include memory or disk usage — those require CW Agent.</strong></p></div>
+<div class="card"><h4>Detailed Monitoring</h4><p>1-minute granularity, must be explicitly enabled on EC2. Required for Auto Scaling policies that must react within 1 minute. Costs extra but essential for production fleets.</p></div>
+</div>
+</div>
+
+<div id="d1-agent">
+<h3>CloudWatch Agent — EC2, ECS &amp; EKS</h3>
+<p>The unified CW Agent collects OS-level data the hypervisor cannot see: memory, disk, processes, swap, and custom application logs.</p>
+<pre><span class="c"># Agent config JSON — key sections</span>
+{
+  "<span class="p">metrics</span>": {
+    "<span class="p">namespace</span>": "<span class="s">CWAgent</span>",
+    "<span class="p">metrics_collected</span>": {
+      "<span class="p">mem</span>":     { "<span class="p">measurement</span>": ["mem_used_percent","mem_available"] },
+      "<span class="p">disk</span>":    { "<span class="p">measurement</span>": ["disk_used_percent"], "<span class="p">resources</span>": ["/"] },
+      "<span class="p">cpu</span>":     { "<span class="p">measurement</span>": ["cpu_usage_iowait","cpu_usage_steal"], "<span class="p">totalcpu</span>": true },
+      "<span class="p">netstat</span>": { "<span class="p">measurement</span>": ["tcp_established","tcp_time_wait"] }
+    },
+    "<span class="p">append_dimensions</span>": {
+      "<span class="p">InstanceId</span>": "${aws:InstanceId}",
+      "<span class="p">AutoScalingGroupName</span>": "${aws:AutoScalingGroupName}"
+    }
+  },
+  "<span class="p">logs</span>": {
+    "<span class="p">logs_collected</span>": { "<span class="p">files</span>": { "<span class="p">collect_list</span>": [{
+      "<span class="p">file_path</span>": "/var/log/app/error.log",
+      "<span class="p">log_group_name</span>": "/app/production/errors",
+      "<span class="p">log_stream_name</span>": "{instance_id}",
+      "<span class="p">retention_in_days</span>": <span class="n">30</span>
+    }]}}
+  }
+}</pre>
+<h4>Container Metrics — ECS &amp; EKS</h4>
+<div class="tw"><table>
+<tr><th>Platform</th><th>Collection Method</th><th>Key Metrics</th><th>Namespace</th></tr>
+<tr><td><strong>ECS on EC2</strong></td><td>CW Agent sidecar or Task Metadata Endpoint</td><td>CPUUtilization, MemoryUtilization</td><td>ECS/ContainerInsights</td></tr>
+<tr><td><strong>ECS Fargate</strong></td><td>Container Insights enabled on cluster</td><td>CpuUtilized, MemoryUtilized, StorageReadBytes</td><td>ECS/ContainerInsights</td></tr>
+<tr><td><strong>EKS</strong></td><td>CloudWatch Observability add-on + Fluent Bit DaemonSet</td><td>Pod CPU/Memory, Node utilization</td><td>ContainerInsights</td></tr>
+</table></div>
+<div class="co cw"><strong>Container Insights:</strong> Enable on ECS: <code>aws ecs update-cluster-settings --settings name=containerInsights,value=enabled</code>. For EKS: deploy via EKS Add-ons. Container Insights generates performance log events queryable via Logs Insights.</div>
+</div>
+
+<div id="d1-alarms">
+<h3>CloudWatch Alarms — Full Operational Guide</h3>
+<div class="tw"><table>
+<tr><th>State</th><th>Meaning</th><th>Available Actions</th></tr>
+<tr><td><strong>OK</strong></td><td>Metric within threshold</td><td>SNS, EC2 actions</td></tr>
+<tr><td><strong>ALARM</strong></td><td>Threshold breached for N evaluation periods</td><td>SNS, EC2 stop/start/reboot/recover, ASG policy, SSM Automation</td></tr>
+<tr><td><strong>INSUFFICIENT_DATA</strong></td><td>Missing data points</td><td>Treat per <code>treat_missing_data</code> setting</td></tr>
+</table></div>
+<h4>Missing Data Treatment</h4>
+<div class="tw"><table>
+<tr><th>Setting</th><th>Behavior</th><th>Use When</th></tr>
+<tr><td><code>missing</code></td><td>INSUFFICIENT_DATA state</td><td>Default; metric may legitimately not report</td></tr>
+<tr><td><code>notBreaching</code></td><td>Treated as within threshold</td><td>Sporadic metrics — absence is normal</td></tr>
+<tr><td><code>breaching</code></td><td>Treated as exceeding threshold</td><td>Metrics that MUST report — missing = problem</td></tr>
+<tr><td><code>ignore</code></td><td>Current state maintained</td><td>Brief gaps in noisy metrics</td></tr>
+</table></div>
+<h4>Composite Alarms — Noise Reduction</h4>
+<p>Composite alarms combine child alarms with boolean logic. Fire only when <em>multiple</em> conditions are simultaneously true — eliminates alert storms.</p>
+<pre><span class="c"># Only alert if BOTH CPU and latency are elevated simultaneously</span>
+aws cloudwatch put-composite-alarm \
+  --alarm-name "AppDegradation" \
+  --alarm-rule "ALARM(\"HighCPU-WebFleet\") AND ALARM(\"HighLatency-ALB\")" \
+  --alarm-actions "arn:aws:sns:us-east-1:123456789:PagerDuty" \
+  --ok-actions "arn:aws:sns:us-east-1:123456789:SlackOps"</pre>
+<div class="co ci"><strong>Anomaly Detection:</strong> CloudWatch trains an ML model on 2 weeks of metric history and creates an expected-value band. Create anomaly alarms when a static threshold is impractical (e.g., traffic with strong daily/weekly patterns). Alarm fires when metric exits the band.</div>
+</div>
+
+<div id="d1-logs">
+<h3>CloudWatch Logs — Operational Mastery</h3>
+<div class="tw"><table>
+<tr><th>Feature</th><th>Operational Use</th><th>Key Detail</th></tr>
+<tr><td><strong>Log Groups / Streams</strong></td><td>Organize by service/env</td><td>Set retention (1d–10yr). Missing retention = silent cost leak.</td></tr>
+<tr><td><strong>Metric Filters</strong></td><td>Log patterns → CloudWatch metrics</td><td>JSON field matching: <code>{($.action = "DELETE") &amp;&amp; ($.user = "admin")}</code></td></tr>
+<tr><td><strong>Subscription Filters</strong></td><td>Real-time streaming</td><td>Targets: Lambda, Kinesis, Firehose. <strong>Max 2 per log group.</strong></td></tr>
+<tr><td><strong>Logs Insights</strong></td><td>Ad-hoc investigation queries</td><td>Cross-account supported. Save frequent queries.</td></tr>
+<tr><td><strong>Contributor Insights</strong></td><td>Top-N contributors to traffic/errors</td><td>Built-in rules for VPC Flow Logs, ALB, API Gateway.</td></tr>
+<tr><td><strong>Live Tail</strong></td><td>Real-time streaming during incidents</td><td>Console only. Filter by pattern. 5-min session.</td></tr>
+</table></div>
+<h4>Logs Insights Query Examples</h4>
+<pre><span class="c"># Top error types and frequency</span>
+fields @timestamp, @message
+| filter @message like /ERROR/
+| parse @message "ERROR: *" as errorType
+| stats count() as freq by errorType
+| sort freq desc | limit 20
+
+<span class="c"># Lambda cold start analysis</span>
+filter @type = "REPORT"
+| stats avg(@initDuration) as avgInit, max(@initDuration) as maxInit,
+        count(@initDuration) as coldStarts by bin(1h)
+
+<span class="c"># ALB latency percentiles from access logs</span>
+fields @timestamp, target_processing_time
+| filter target_processing_time > 0
+| stats pct(target_processing_time,50) as p50,
+        pct(target_processing_time,95) as p95,
+        pct(target_processing_time,99) as p99 by bin(5m)</pre>
+</div>
+
+<div id="d1-ct">
+<div class="tdv"><span class="tl">Task 1.2 — Identify &amp; Remediate Issues</span></div>
+<h3>CloudTrail — Auditing &amp; Forensic Investigation</h3>
+<div class="g3">
+<div class="card"><h4>Management Events</h4><p>Control-plane API calls. Enabled by default. First trail per Region is free. <code>CreateBucket</code>, <code>RunInstances</code>, <code>AttachRolePolicy</code>. Split read/write for cost control.</p></div>
+<div class="card"><h4>Data Events</h4><p>Data-plane operations. Off by default; extra cost. S3 object ops, Lambda invocations, DynamoDB item-level. Essential for data exfiltration investigations.</p></div>
+<div class="card"><h4>Insights Events</h4><p>Detects unusual API call volume vs. baseline. Writes to separate S3 prefix. Example: 100× normal <code>DescribeInstances</code> = recon detection.</p></div>
+</div>
+<div class="rb">
+<div class="rbh"><span>🔍</span><h4>Runbook: Investigate Unauthorized API Activity</h4></div>
+<div class="rbb">
+<div class="rbs"><div class="rbn">1</div><div class="rbc"><strong>Scope the incident</strong> — define time window and affected resource ARNs. Start with CloudTrail Event History in console (last 90 days, management events).</div></div>
+<div class="rbs"><div class="rbn">2</div><div class="rbc"><strong>Query CloudTrail Lake or Athena</strong> on S3 trail. Pattern: <code>WHERE eventName='AssumeRole' AND errorCode IS NULL AND requestParameters LIKE '%target-role%'</code></div></div>
+<div class="rbs"><div class="rbn">3</div><div class="rbc"><strong>Decode caller identity</strong> — <code>userIdentity.type</code>: Root, IAMUser, AssumedRole, FederatedUser. For AssumedRole: check <code>userIdentity.sessionContext.sessionIssuer.arn</code> for the origin role.</div></div>
+<div class="rbs"><div class="rbn">4</div><div class="rbc"><strong>Check <code>errorCode</code></strong> — absence = API call <em>succeeded</em>. <code>AccessDenied</code> = blocked by policy. Correlate resource ARN from <code>requestParameters</code>.</div></div>
+<div class="rbs"><div class="rbn">5</div><div class="rbc"><strong>Pivot to GuardDuty</strong> — check for <code>UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS</code> or <code>Recon:IAMUser/MaliciousIPCaller</code>.</div></div>
+<div class="rbs"><div class="rbn">6</div><div class="rbc"><strong>Contain</strong> — revoke active sessions by attaching an explicit deny policy. For compromised EC2: detach IAM role, isolate with restrictive SG, take memory dump if needed.</div></div>
+<div class="rbs"><div class="rbn">7</div><div class="rbc"><strong>Document &amp; prevent recurrence</strong> — rotate credentials, update SCPs, create EventBridge rule to alert on similar activity, file post-mortem.</div></div>
+</div>
+</div>
+<div class="co ci"><strong>CloudTrail Lake SQL Query:</strong> <code>SELECT eventTime, userIdentity.arn, eventName, errorCode FROM &lt;datastore-ARN&gt; WHERE eventName IN ('AttachRolePolicy','PutRolePolicy','CreateAccessKey') AND eventTime &gt; DATE_ADD('day',-1,NOW())</code> — detect privilege escalation attempts.</div>
+</div>
+
+<div id="d1-eb">
+<h3>EventBridge — Event-Driven Remediation</h3>
+<div class="diag"><pre>
+EVENT SOURCES              EVENT BUS                RULES &amp; TARGETS
+┌────────────┐            ┌────────────────┐       ┌─────────────────┐
+│ AWS Services│───────────▶ Default Bus     │──────▶│ Rule: Pattern   │
+│ CloudTrail  │            │ (AWS events)   │       │  eventSource    │
+│ Config, EC2 │            └────────────────┘       │  detail-type    │
+└────────────┘            ┌────────────────┐       │  detail fields  │
+┌────────────┐            │ Custom Bus     │       └────────┬────────┘
+│ Custom Apps │───────────▶ (app events)   │                │
+└────────────┘            └────────────────┘       TARGETS ▼
+┌────────────┐            ┌────────────────┐       ┌─────────────────┐
+│ SaaS Partner│───────────▶ Partner Bus    │       │ · Lambda        │
+└────────────┘            └────────────────┘       │ · SSM Automation│
+                          Archive &amp; Replay          │ · SNS / SQS     │
+                          Pipes (enrichment)        │ · Step Functions│
+                                                    │ · API Destination│
+                                                    └─────────────────┘</pre></div>
+<h4>Critical CloudOps EventBridge Patterns</h4>
+<div class="tw"><table>
+<tr><th>Scenario</th><th>Source / Pattern</th><th>Target &amp; Action</th></tr>
+<tr><td>Auto-remediate unencrypted S3</td><td>AWS Config → ComplianceChangeNotification NON_COMPLIANT</td><td>SSM <code>AWS-EnableS3BucketEncryption</code></td></tr>
+<tr><td>Restart unhealthy EC2</td><td>CloudWatch Alarm → ALARM state</td><td>SSM <code>AWS-RestartEC2Instance</code></td></tr>
+<tr><td>Alert on root login</td><td>CloudTrail → signin.amazonaws.com, Root userIdentity</td><td>SNS → PagerDuty webhook</td></tr>
+<tr><td>Stop EC2 on budget breach</td><td>AWS Budgets → Budget alert</td><td>Lambda → Stop non-critical EC2</td></tr>
+<tr><td>Rotate creds after GuardDuty finding</td><td>GuardDuty → InstanceCredentialExfiltration</td><td>Step Functions → isolate + rotate workflow</td></tr>
+<tr><td>Enforce tags on creation</td><td>CloudTrail → Create* events (EC2, S3, RDS)</td><td>Lambda → apply required tags or quarantine</td></tr>
+</table></div>
+<div class="co cw"><strong>EventBridge DLQ:</strong> Always configure an SQS Dead Letter Queue on EventBridge rule targets. Failed deliveries (Lambda throttle, SSM error) land in the DLQ for visibility. Monitor DLQ depth via CloudWatch alarm. Check <code>FailedInvocations</code> metric on <code>AWS/Events</code> namespace.</div>
+</div>
+
+<div id="d1-ssm">
+<h3>AWS Systems Manager — Full Operational Stack</h3>
+<div class="g3">
+<div class="card"><h4>Prerequisites</h4><ul><li>SSM Agent installed (pre-installed AL2/Ubuntu/Windows)</li><li>Instance profile: <code>AmazonSSMManagedInstanceCore</code></li><li>Outbound HTTPS to SSM endpoints or Interface VPC Endpoint</li><li>Instance visible in Fleet Manager</li></ul></div>
+<div class="card"><h4>Session Manager</h4><ul><li>Shell access — no inbound SG rules or key pairs</li><li>Sessions logged to S3 + CloudWatch Logs</li><li>Port forwarding: access RDS/Redis via local port</li><li>IAM-controlled: who can start sessions per instance tag</li></ul></div>
+<div class="card"><h4>Patch Manager Flow</h4><ul><li>1. Define patch baseline (OS + severity)</li><li>2. Create maintenance window (cron)</li><li>3. Register targets (tag-based)</li><li>4. Register task: <code>AWS-RunPatchBaseline</code></li><li>5. View compliance dashboard</li></ul></div>
+</div>
+<h4>Key SSM Automation Documents</h4>
+<div class="tw"><table>
+<tr><th>Document</th><th>Purpose</th><th>Trigger Method</th></tr>
+<tr><td><code>AWS-RestartEC2Instance</code></td><td>Stop + start with health wait</td><td>EventBridge on CW alarm</td></tr>
+<tr><td><code>AWS-PatchInstanceWithRollback</code></td><td>Patch and auto-rollback on failure</td><td>Maintenance window</td></tr>
+<tr><td><code>AWS-CreateSnapshot</code></td><td>EBS snapshot with wait</td><td>Scheduled / EventBridge</td></tr>
+<tr><td><code>AWSSupport-TroubleshootEC2Unreachable</code></td><td>Diagnose networking/SG/route issues</td><td>Manual on incident</td></tr>
+<tr><td><code>AWS-EnableS3BucketEncryption</code></td><td>Enforce SSE-KMS on bucket</td><td>Config auto-remediation</td></tr>
+<tr><td><code>AWS-GatherSoftwareInventory</code></td><td>Collect software inventory</td><td>State Manager association</td></tr>
+</table></div>
+<div class="co cw"><strong>State Manager vs. Run Command:</strong> Run Command = one-time execution. State Manager = continuous enforcement — automatically re-applies the association if drift is detected. Use State Manager to maintain desired state (CW Agent config, hardening scripts); use Run Command for one-off operational tasks.</div>
+</div>
+
+<div id="d1-xray">
+<h3>AWS X-Ray — Distributed Tracing &amp; ServiceLens</h3>
+<div class="g2">
+<div class="card"><h4>Key Concepts</h4><ul><li><strong>Trace:</strong> End-to-end request path with unique Trace ID</li><li><strong>Segment:</strong> Work done by a single service</li><li><strong>Subsegment:</strong> Calls to downstream resources (DynamoDB, S3, HTTP)</li><li><strong>Sampling:</strong> Default 5% + 1 req/sec. Create custom rules for critical paths (payment = 100%).</li><li><strong>Groups:</strong> Filter expressions to isolate traces by URL or fault status</li></ul></div>
+<div class="card"><h4>ServiceLens Integration</h4><ul><li>CloudWatch ServiceLens = X-Ray + CW Metrics + CW Logs in one view</li><li>Service map shows inter-service call graph with error rates and latency</li><li>Click any node → see its alarms, metrics, and traces</li><li>Use for incident triage: identify which downstream service is failing</li><li>Detect Lambda cold-start impact on overall p99 latency</li></ul></div>
+</div>
+</div>
+
+<div id="d1-perf">
+<div class="tdv"><span class="tl">Task 1.3 — Performance Optimization</span></div>
+<h3>EC2, EBS, S3, RDS &amp; DynamoDB Performance</h3>
+<h4>EC2 Performance Tuning Matrix</h4>
+<div class="tw"><table>
+<tr><th>Issue</th><th>Metric</th><th>Root Cause</th><th>Remediation</th></tr>
+<tr><td>CPU saturation</td><td><code>CPUUtilization &gt; 80%</code></td><td>Under-provisioned / inefficient code</td><td>Compute Optimizer recommendation; ASG scale-out; right-size instance family</td></tr>
+<tr><td>CPU credit depletion</td><td><code>CPUCreditBalance → 0</code></td><td>T2/T3 burst beyond baseline</td><td>Enable Unlimited mode; monitor <code>CPUSurplusCreditsCharged</code> for cost</td></tr>
+<tr><td>High I/O wait</td><td><code>cpu_usage_iowait</code> (CW Agent)</td><td>EBS throughput/IOPS saturated</td><td>Upgrade gp2→gp3; increase provisioned IOPS; enable EBS-optimized on instance</td></tr>
+<tr><td>Network saturation</td><td><code>NetworkIn/Out</code> near limit</td><td>Instance type bandwidth ceiling</td><td>Move to network-optimized (m5n, c5n); placement group for HPC</td></tr>
+<tr><td>TCP TIME_WAIT high</td><td><code>tcp_time_wait</code> (CW Agent)</td><td>Short-lived connections not recycled</td><td>Enable TCP keepalive; use ELB/RDS Proxy to pool connections</td></tr>
+</table></div>
+<h4>EC2 Placement Groups</h4>
+<div class="g3">
+<div class="card"><h4>Cluster</h4><p>Single AZ, low-latency, 10Gbps+ between instances. Use for HPC, tightly coupled workloads. Risk: single rack = single failure domain.</p></div>
+<div class="card"><h4>Spread</h4><p>Each instance on a distinct hardware rack. Max 7 per AZ. Use for critical instances needing maximum isolation (e.g., 3-node Zookeeper).</p></div>
+<div class="card"><h4>Partition</h4><p>Groups on separate racks, up to 7 partitions per AZ. Use for distributed systems: Kafka, Cassandra, HDFS. Each partition = separate fault domain.</p></div>
+</div>
+<h4>EBS Volume Types — Selection Guide</h4>
+<div class="tw"><table>
+<tr><th>Type</th><th>Max IOPS</th><th>Max Throughput</th><th>Latency</th><th>Best For</th></tr>
+<tr><td><strong>gp3</strong></td><td>16,000</td><td>1,000 MiB/s</td><td>single-digit ms</td><td><strong>Default choice.</strong> IOPS and throughput independent of size. 20% cheaper than gp2.</td></tr>
+<tr><td><strong>gp2</strong></td><td>16,000</td><td>250 MiB/s</td><td>single-digit ms</td><td>Legacy. 3 IOPS/GB baseline. Migrate to gp3 for free perf gains.</td></tr>
+<tr><td><strong>io2 Block Express</strong></td><td>256,000</td><td>4,000 MiB/s</td><td>sub-ms</td><td>SAP HANA, Oracle mission-critical. 99.999% durability SLA.</td></tr>
+<tr><td><strong>io1</strong></td><td>64,000</td><td>1,000 MiB/s</td><td>single-digit ms</td><td>Legacy provisioned IOPS. Migrate to io2.</td></tr>
+<tr><td><strong>st1</strong></td><td>500 MiB/s</td><td>500 MiB/s</td><td>10–100ms</td><td>Big data, Kafka logs, sequential large-block I/O. Not bootable.</td></tr>
+<tr><td><strong>sc1</strong></td><td>250 MiB/s</td><td>250 MiB/s</td><td>10–100ms</td><td>Cold archive, infrequent access. Lowest cost per GB.</td></tr>
+</table></div>
+<h4>Shared Storage: EFS vs FSx</h4>
+<div class="tw"><table>
+<tr><th></th><th>Amazon EFS</th><th>FSx for Windows</th><th>FSx for Lustre</th></tr>
+<tr><td>Protocol</td><td>NFSv4</td><td>SMB / CIFS</td><td>Lustre POSIX</td></tr>
+<tr><td>OS</td><td>Linux only</td><td>Windows + Linux</td><td>Linux</td></tr>
+<tr><td>Lifecycle</td><td>EFS IA (30/60/90 day transition)</td><td>N/A</td><td>S3 data repository link</td></tr>
+<tr><td>Use Case</td><td>Shared Linux web content, containers, Lambda /tmp</td><td>Active Directory integration, Windows apps</td><td>ML training, HPC, genomics</td></tr>
+</table></div>
+<h4>RDS Performance Toolkit</h4>
+<div class="tw"><table>
+<tr><th>Tool</th><th>What It Shows</th><th>Action</th></tr>
+<tr><td><strong>Performance Insights</strong></td><td>DB load by wait state: SQL, locks, CPU, I/O</td><td>Identify slowest query; add index; check lock contention</td></tr>
+<tr><td><strong>Enhanced Monitoring</strong></td><td>OS-level: CPU steal, memory, filesystem, processes (1–60s)</td><td>Detect memory pressure; identify noisy neighbor processes</td></tr>
+<tr><td><strong>RDS Proxy</strong></td><td>Connection pool: DatabaseConnections vs ClientConnections</td><td>Use for Lambda→RDS to eliminate connection storms on cold starts</td></tr>
+<tr><td><strong>CloudWatch RDS Metrics</strong></td><td>ReadIOPS, WriteLatency, FreeStorageSpace, ReplicaLag</td><td>Alarm on ReplicaLag &gt;30s; alarm on FreeStorageSpace &lt;10GB</td></tr>
+</table></div>
+<h4>DynamoDB Performance &amp; Troubleshooting</h4>
+<div class="tw"><table>
+<tr><th>Problem</th><th>Symptom</th><th>Solution</th></tr>
+<tr><td>Hot partition</td><td><code>ConsumedReadCapacityUnits</code> spiky; throttling on some items only</td><td>High-cardinality partition key; write sharding (add random suffix); DAX for read hot keys</td></tr>
+<tr><td>Throttling</td><td><code>ThrottledRequests &gt; 0</code>; <code>ProvisionedThroughputExceededException</code></td><td>Increase provisioned capacity or switch to on-demand. Implement exponential backoff in SDK.</td></tr>
+<tr><td>Flash sale spike</td><td>Throttling at event start despite Auto Scaling</td><td>ASG has ~1-min delay. Use on-demand mode or pre-warm with scheduled Auto Scaling before event.</td></tr>
+<tr><td>Full table scan cost</td><td>All RCU consumed, high latency</td><td>Replace Scan with Query using partition key. Add GSI for new access patterns.</td></tr>
+</table></div>
+</div>
+
+<div id="d1-prom">
+<h3>Amazon Managed Prometheus (AMP) &amp; Grafana (AMG)</h3>
+<div class="g2">
+<div class="card"><h4>AMP Setup Pattern</h4><ul><li>Create workspace per team/environment</li><li>Configure Prometheus <code>remote_write</code> to AMP endpoint with SigV4 auth</li><li>Use IAM role on EKS node for authentication</li><li>Query with PromQL via Grafana or API</li><li>Alertmanager-compatible alert rules</li></ul></div>
+<div class="card"><h4>AMG Data Sources</h4><ul><li>Amazon Managed Prometheus (PromQL)</li><li>CloudWatch metrics and logs</li><li>Athena for log analytics</li><li>AWS X-Ray traces</li><li>Configure SSO via IAM Identity Center</li><li>Built-in alerting → SNS or PagerDuty</li></ul></div>
+</div>
+<div class="co ci"><strong>When to use AMP vs CloudWatch for containers:</strong> Use CloudWatch Container Insights for AWS-native dashboards and alarms on ECS/EKS. Use AMP + AMG when teams already use Prometheus operator patterns in Kubernetes, or when you need PromQL-based alerting rules and community Grafana dashboards.</div>
+</div>
+
+<div id="d1-incident">
+<h3>Real-World Incident Response Workflow</h3>
+<div class="dtree">INCIDENT DETECTED
+  ├── CloudWatch Alarm → SNS → PagerDuty
+  ├── GuardDuty Finding → EventBridge → SNS
+  └── User report → Slack/Ticket
+
+TRIAGE (First 5 minutes)
+  ├── Acknowledge alert; open CloudWatch ServiceLens
+  ├── Check recent deployments (CodeDeploy, CFN change sets)
+  └── Classify: P1 (customer impact) / P2 (degraded) / P3 (no impact)
+
+P1 — CUSTOMER IMPACT
+  ├── Start incident bridge / war room
+  ├── Check ALB: 5xxCount, TargetConnectionErrorCount
+  ├── Check ECS/EC2 health in Target Group
+  ├── Check RDS: FreeStorageSpace, CPU, Connections, ReplicaLag
+  ├── Logs Insights: fields @message | filter @message like /ERROR|FATAL/ | limit 50
+  ├── Consider rollback if recent deploy:
+  │     └── CodeDeploy: Stop + Rollback
+  │         CFN: Cancel Update or execute previous Change Set
+  └── Update status page (Route 53 health check → failover)
+
+RESOLUTION
+  ├── Root cause documented
+  ├── Fix deployed and validated (alarms return to OK)
+  └── Post-incident: create Config rule, CFN Guard policy, runbook update</div>
+</div>
+
+<div id="d1-tips">
+<div class="tips">
+<div class="tph">🎯 Domain 1 Exam Tips &amp; Common Traps</div>
+<ul>
+<li><strong>Memory/disk metrics require CW Agent</strong> — CloudWatch does NOT automatically collect them. This appears in every exam sitting.</li>
+<li><strong>Composite alarms evaluate alarm states, not metrics directly.</strong> You need child metric alarms first.</li>
+<li><strong>CloudTrail Event History = 90 days, management events only.</strong> For data events or full history, you need an S3 trail.</li>
+<li><strong>Subscription filter limit = 2 per log group.</strong> Use Kinesis as a fan-out layer for more consumers.</li>
+<li><strong>Always configure DLQ on EventBridge targets</strong> — without it, failed deliveries are silently dropped.</li>
+<li><strong>SSM Session Manager requires no inbound SG rules.</strong> If asked for secure EC2 access without SSH/RDP, answer is Session Manager.</li>
+<li><strong>X-Ray default sampling = 5% + 1 req/sec.</strong> For payment flows, create custom sampling rule at 100%.</li>
+<li><strong>gp3 is strictly better than gp2 in most cases</strong> — cheaper and allows independent IOPS/throughput provisioning.</li>
+<li><strong>EBS VolumeQueueLength consistently &gt;1 = I/O bottleneck.</strong> Upgrade volume type or instance EBS bandwidth.</li>
+</ul>
+</div>
+<div class="tdv"><span class="tl">Exam Questions — Domain 1</span></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">A CloudOps engineer must ensure individual CloudWatch alarms trigger SNS AND run SSM Automation to restart EC2. However, during incidents, 8 alarms fire simultaneously, creating an alert storm. What is the MOST operationally correct architecture?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>Configure each alarm with both SNS and SSM Automation as direct actions.</li>
+<li onclick="hq(this,true)"><span class="ol">B.</span>Create a composite alarm combining the individual alarms with OR logic. Add SNS and SSM actions only to the composite alarm.</li>
+<li onclick="hq(this,false)"><span class="ol">C.</span>Create an EventBridge rule matching all ALARM state changes and route to both SNS and SSM.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Use CloudWatch Anomaly Detection on all alarms and act only on anomaly alarms.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: B.</strong> Composite alarms enter ALARM state based on a boolean expression across child alarm states — this means a single notification/runbook fires per incident, not N times. Option A causes N separate notifications for one incident. Option C still triggers on every individual alarm transition. The key benefit of composite alarms is noise suppression.</div></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">A DynamoDB table shows <code>ThrottledRequests</code> consistently above zero during flash sales despite provisioned mode with Auto Scaling targeting 70% utilization. What is the root cause and correct fix?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>Lower Auto Scaling target utilization to 40% to provision capacity sooner.</li>
+<li onclick="hq(this,false)"><span class="ol">B.</span>Add DynamoDB read replicas in the same Region.</li>
+<li onclick="hq(this,true)"><span class="ol">C.</span>Auto Scaling has ~1 minute reaction time and cannot handle instantaneous spikes. Switch to on-demand mode for flash sale periods, or pre-warm with scheduled scaling before the event.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Enable DAX to cache reads and reduce consumed RCU.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: C.</strong> DynamoDB Auto Scaling cannot react instantaneously — it has ~1-minute delay. A flash sale spike causes throttling before capacity is added. Solutions: (1) on-demand mode handles any request rate instantly with no capacity planning, or (2) scheduled scaling to pre-provision before the event. DAX (D) reduces read latency but doesn't solve write throttling, and flash sales involve writes too.</div></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">An application writes structured JSON logs to CloudWatch Logs. The security team needs an alert within 2 minutes when a log entry contains <code>"action": "DELETE"</code> AND <code>"userId": "admin"</code> simultaneously. What is the MOST cost-effective solution?</div>
+<ul class="qo">
+<li onclick="hq(this,true)"><span class="ol">A.</span>Create a CloudWatch Metric Filter with pattern <code>{($.action = "DELETE") &amp;&amp; ($.userId = "admin")}</code>, create a CloudWatch Alarm on the metric, configure SNS as the alarm action.</li>
+<li onclick="hq(this,false)"><span class="ol">B.</span>Subscription filter sending all logs to Lambda, which parses JSON and publishes to SNS.</li>
+<li onclick="hq(this,false)"><span class="ol">C.</span>Schedule a Logs Insights query every 2 minutes via EventBridge, trigger Lambda to check results.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Enable CloudTrail data events and create an EventBridge rule for the S3 bucket events.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: A.</strong> CloudWatch Metric Filters support JSON field matching with AND/OR syntax natively. This is serverless, near-real-time (&lt;1 min), and free. Option B works but Lambda invocations for every log event are expensive and complex. Option C is polling with minimum 2-min lag guaranteed. Option D is irrelevant — CloudTrail is for API calls, not application JSON logs.</div></div>
+</div>
+</section>
+
+<!-- ══════════ DOMAIN 2 ══════════ -->
+<section class="dom" id="d2">
+<div class="dh"><div class="dnum n2">D2</div><div class="dtit"><h2>Reliability &amp; Business Continuity</h2><div class="dwt">22% of scored content · Tasks 2.1 / 2.2 / 2.3 · Skills 2.1.1–2.3.4</div></div></div>
+
+<div id="d2-asg">
+<div class="tdv"><span class="tl">Task 2.1 — Scalability &amp; Elasticity</span></div>
+<h3>Auto Scaling — All Types &amp; Policies</h3>
+<div class="tw"><table>
+<tr><th>Policy Type</th><th>How It Works</th><th>Best For</th><th>Pitfall</th></tr>
+<tr><td><strong>Target Tracking</strong></td><td>Maintain a target metric (CPU=60%). AWS auto-calculates capacity changes.</td><td>Most workloads. Start here.</td><td>Doesn't handle instantaneous step-function traffic spikes.</td></tr>
+<tr><td><strong>Step Scaling</strong></td><td>Alarm → add N instances per breach magnitude level.</td><td>"At 70% add 2; at 90% add 5"</td><td>Requires careful alarm + cooldown tuning.</td></tr>
+<tr><td><strong>Simple Scaling</strong></td><td>One alarm → one adjustment. Full cooldown before next action.</td><td>Legacy. Avoid for new deployments.</td><td>Full cooldown blocks subsequent scale-out events.</td></tr>
+<tr><td><strong>Scheduled Scaling</strong></td><td>Pre-scale at cron time regardless of metrics.</td><td>Known peak windows (Mon–Fri 9am).</td><td>Doesn't adapt to unexpected traffic.</td></tr>
+<tr><td><strong>Predictive Scaling</strong></td><td>ML forecast on 14-day history. Scales out <em>before</em> demand arrives.</td><td>Consistent cyclical traffic patterns.</td><td>Needs 24hr+ of data. May over-provision.</td></tr>
+</table></div>
+<div class="co cw"><strong>Warm Pools:</strong> Pre-launched, initialized instances held outside the ASG in stopped (or running) state. Scale-out events pull from the warm pool in 30–90 seconds vs 3–8 minutes for cold launch. Use for apps with slow startup, database connections, or cache warming. Configure <code>MinSize</code> and <code>MaxGroupPreparedCapacity</code>.</div>
+<h4>Application Auto Scaling (Non-EC2)</h4>
+<div class="tw"><table>
+<tr><th>Resource</th><th>Scaling Dimension</th><th>Key Metric</th></tr>
+<tr><td>ECS Service</td><td>Desired task count</td><td>CPUUtilization, MemoryUtilization, custom ALB metric</td></tr>
+<tr><td>DynamoDB Table</td><td>Read/Write Capacity Units</td><td>ConsumedReadCapacityUnits utilization %</td></tr>
+<tr><td>Aurora Cluster</td><td>Read replica count (0–15)</td><td>CPUUtilization of reader instances</td></tr>
+<tr><td>Lambda Provisioned Concurrency</td><td>Provisioned concurrency count</td><td>ProvisionedConcurrencyUtilization</td></tr>
+</table></div>
+</div>
+
+<div id="d2-elb">
+<h3>Elastic Load Balancing — All 4 Types</h3>
+<div class="tw"><table>
+<tr><th>Type</th><th>Layer</th><th>Protocols</th><th>Targets</th><th>Key Features</th></tr>
+<tr><td><strong>ALB</strong></td><td>L7</td><td>HTTP, HTTPS, gRPC, WebSocket</td><td>EC2, IP, Lambda, ECS</td><td>Path/host routing, WAF integration, Cognito/OIDC auth, sticky sessions</td></tr>
+<tr><td><strong>NLB</strong></td><td>L4</td><td>TCP, UDP, TLS</td><td>EC2, IP, ALB</td><td>Static Elastic IPs, ultra-low latency, preserve source IP, PrivateLink support</td></tr>
+<tr><td><strong>CLB</strong></td><td>L4/L7</td><td>HTTP, HTTPS, TCP, SSL</td><td>EC2 only</td><td>Legacy. Migrate to ALB or NLB for all new workloads.</td></tr>
+<tr><td><strong>GWLB</strong></td><td>L3 (GENEVE)</td><td>All IP traffic</td><td>Virtual appliances</td><td>Route traffic through firewalls/IDS/IPS. Pairs with PrivateLink and GWLB Endpoints.</td></tr>
+</table></div>
+<div class="co cw"><strong>ALB HTTP error codes:</strong> 502 = target returned invalid response or was unreachable. 503 = no healthy targets in target group. 504 = target timed out. Check ALB access logs field <code>target_status_code</code> to distinguish ELB-level vs. target-level errors.</div>
+<h4>Health Check Configuration Best Practices</h4>
+<div class="tw"><table>
+<tr><th>Parameter</th><th>Recommendation</th><th>Reason</th></tr>
+<tr><td>Protocol / Path</td><td>HTTP on <code>/health</code></td><td>Dedicated endpoint that checks DB connectivity, cache, dependencies</td></tr>
+<tr><td>Healthy threshold</td><td>2</td><td>Fast recovery — 2 consecutive successes marks target healthy after restart</td></tr>
+<tr><td>Unhealthy threshold</td><td>3</td><td>Avoids flapping on transient errors (single 500 doesn't remove from rotation)</td></tr>
+<tr><td>Interval</td><td>10s production / 30s cost-sensitive</td><td>Balance detection speed vs. health check traffic</td></tr>
+<tr><td>Timeout</td><td>5s</td><td>Must be less than interval; accounts for app warm-up</td></tr>
+</table></div>
+</div>
+
+<div id="d2-ha">
+<div class="tdv"><span class="tl">Task 2.2 — Highly Available &amp; Resilient Environments</span></div>
+<h3>Multi-AZ High Availability Architecture</h3>
+<div class="diag"><pre>
+Multi-AZ HA Architecture (us-east-1)
+
+  Route 53 (Latency/Failover routing + Health checks)
+       │
+  ┌────▼────────────────────────────────────────────┐
+  │    Application Load Balancer (spans 3 AZs)      │
+  └──────┬─────────────────┬──────────────┬─────────┘
+         │                 │              │
+  ┌──────▼──────┐  ┌───────▼─────┐  ┌────▼────────┐
+  │  AZ-1a      │  │  AZ-1b      │  │  AZ-1c      │
+  │  EC2 ASG    │  │  EC2 ASG    │  │  EC2 ASG    │
+  │  (min 1/AZ) │  │  (min 1/AZ) │  │  (min 1/AZ) │
+  └──────┬──────┘  └───────┬─────┘  └────┬────────┘
+         └─────────────────┼──────────────┘
+                           │
+              ┌────────────▼───────────────────┐
+              │  RDS Multi-AZ (Primary + Standby)│
+              │  Synchronous replication          │
+              │  Auto-failover ~60s DNS flip      │
+              └────────────────────────────────────┘
+
+S3: 11-nines durability, auto-replicated across ≥3 AZs
+ElastiCache Redis: cluster mode — shards across 3 AZs</pre></div>
+<div class="co ci"><strong>AZ balance best practice:</strong> Set ASG <code>MinInstancesInService</code> per AZ. Use <code>AZRebalance</code> process to maintain even distribution. If one AZ fails, ASG automatically launches replacement instances in remaining AZs.</div>
+</div>
+
+<div id="d2-rds">
+<h3>RDS &amp; Aurora High Availability</h3>
+<div class="tw"><table>
+<tr><th>Feature</th><th>RDS Multi-AZ</th><th>Aurora Multi-AZ</th></tr>
+<tr><td>Replication</td><td>Synchronous block-level</td><td>Synchronous: 6 copies across 3 AZs; 4/6 quorum for writes</td></tr>
+<tr><td>Failover time</td><td>60–120 seconds (DNS TTL propagation)</td><td>~30 seconds (Aurora detects + promotes replica)</td></tr>
+<tr><td>Readable standby</td><td><strong>No</strong> — passive standby only</td><td><strong>Yes</strong> — Aurora Replicas are readable</td></tr>
+<tr><td>Storage</td><td>Per-instance (EBS)</td><td>Shared cluster storage, auto-grows to 128TB</td></tr>
+<tr><td>Cross-Region DR</td><td>Read Replica in another Region (manual promotion)</td><td>Aurora Global Database (1 primary + 5 secondaries, RPO &lt;1s)</td></tr>
+<tr><td>PITR</td><td>Up to 35 days to new DB instance</td><td>35 days PITR + Backtrack (in-place rewind up to 72hrs)</td></tr>
+</table></div>
+<div class="co cs"><strong>Aurora Backtrack vs PITR:</strong> Backtrack rewinds the cluster in-place in ~5 minutes — no new cluster, no DNS change, no redirection needed. Limited to 72 hours back. PITR restores to a NEW cluster requiring DNS update. Use Backtrack for "oops, wrong DELETE"; use PITR for compliance/forensic restores to a specific timestamp.</div>
+</div>
+
+<div id="d2-backup">
+<div class="tdv"><span class="tl">Task 2.3 — Backup &amp; Restore</span></div>
+<h3>Backup Strategy Matrix</h3>
+<div class="tw"><table>
+<tr><th>Resource</th><th>Native Backup</th><th>RPO</th><th>Restore Target</th><th>Key Operational Note</th></tr>
+<tr><td>EBS Volume</td><td>Snapshot (incremental, S3-backed)</td><td>Last snapshot</td><td>New volume in any AZ</td><td>Enable Fast Snapshot Restore per AZ to eliminate initialization latency. Use DLM for automation.</td></tr>
+<tr><td>RDS / Aurora</td><td>Automated backups + PITR (transaction logs)</td><td>5 minutes</td><td>New DB instance</td><td>Retention 1–35 days. Take final snapshot before deleting DB — automated backups are deleted with the DB.</td></tr>
+<tr><td>DynamoDB</td><td>PITR (continuous) + on-demand backups</td><td>Any second in last 35 days</td><td>New table</td><td>PITR = any second in 35 days. On-demand = no expiry. Neither impacts table performance.</td></tr>
+<tr><td>S3</td><td>Versioning + Replication + Object Lock</td><td>Previous version</td><td>Restore version via CLI</td><td>Enable MFA Delete for critical buckets. Object Lock (WORM) for compliance. S3 Replication for cross-Region copies.</td></tr>
+<tr><td>EFS</td><td>AWS Backup (daily default)</td><td>Last backup</td><td>New or existing EFS</td><td>EFS Replication provides async cross-Region copy with sub-minute RPO.</td></tr>
+<tr><td>EC2</td><td>AMI (multi-volume snapshot) via AWS Backup</td><td>Last AMI creation</td><td>New EC2 from AMI</td><td>Schedule automated AMI creation in AWS Backup. Tag AMIs for lifecycle management.</td></tr>
+</table></div>
+<h4>RTO / RPO Decision Framework</h4>
+<div class="dtree">RPO (max data loss tolerable?)
+  ├── 0 seconds  → Aurora Global DB / Multi-AZ synchronous replication
+  ├── &lt;1 minute  → DynamoDB Global Tables, RDS PITR (5-min transaction logs)
+  ├── &lt;1 hour    → Daily automated backups (RDS, Aurora, EFS)
+  └── Days       → Weekly AWS Backup plan, Glacier archive
+
+RTO (max downtime tolerable?)
+  ├── &lt;1 minute  → Multi-AZ w/ Route 53 health check auto-failover
+  ├── &lt;10 min    → Aurora fast failover + RDS Proxy (pre-warmed connections)
+  ├── &lt;30 min    → Pilot Light DR (pre-provisioned DB, scale app on failover)
+  ├── &lt;4 hours   → Warm Standby DR (scaled-down running environment)
+  └── &lt;24 hours  → Backup &amp; Restore from S3/Glacier</div>
+</div>
+
+<div id="d2-dr">
+<h3>Disaster Recovery Patterns</h3>
+<div class="tw"><table>
+<tr><th>Pattern</th><th>RTO</th><th>RPO</th><th>Cost</th><th>What's Pre-Running</th></tr>
+<tr><td><strong>Backup &amp; Restore</strong></td><td>1–24 hrs</td><td>1–24 hrs</td><td>1× + storage</td><td>Nothing (data backups in S3 only)</td></tr>
+<tr><td><strong>Pilot Light</strong></td><td>15–30 min</td><td>Minutes</td><td>~1.1×</td><td>Database tier only. App tier AMIs ready, not running.</td></tr>
+<tr><td><strong>Warm Standby</strong></td><td>Minutes</td><td>Seconds</td><td>~2×</td><td>Full stack at reduced capacity (e.g., 25% of prod). Scale up on failover.</td></tr>
+<tr><td><strong>Multi-Site Active/Active</strong></td><td>Seconds</td><td>Near-zero</td><td>2–4×</td><td>Full production in both Regions. Route 53 or Global Accelerator splits traffic.</td></tr>
+</table></div>
+<div class="rb">
+<div class="rbh"><span>🔄</span><h4>Runbook: Execute Warm Standby Failover</h4></div>
+<div class="rbb">
+<div class="rbs"><div class="rbn">1</div><div class="rbc"><strong>Declare failover</strong> — incident commander approval. Document timestamp and reason in incident ticket.</div></div>
+<div class="rbs"><div class="rbn">2</div><div class="rbc"><strong>Promote DR database</strong> — RDS: promote read replica. Aurora Global: <code>aws rds failover-global-cluster --global-cluster-identifier X --target-db-cluster-identifier Y</code>. ETA: ~1 min Aurora / 5–10 min RDS.</div></div>
+<div class="rbs"><div class="rbn">3</div><div class="rbc"><strong>Scale up DR app tier</strong> — update ASG min/desired to production values in DR Region. Pre-baked AMIs in launch template should already be current from automated pipeline.</div></div>
+<div class="rbs"><div class="rbn">4</div><div class="rbc"><strong>Update DNS / routing controls</strong> — Route 53 weighted record: set primary weight=0, DR weight=100. Or use ARC routing controls: one API call to flip health check status.</div></div>
+<div class="rbs"><div class="rbn">5</div><div class="rbc"><strong>Validate</strong> — smoke tests against DR endpoint. Check CloudWatch dashboards in DR Region. Confirm no errors in application logs via Logs Insights.</div></div>
+<div class="rbs"><div class="rbn">6</div><div class="rbc"><strong>Communicate</strong> — update status page. Notify stakeholders. Begin primary Region recovery in background (don't rush failback).</div></div>
+</div>
+</div>
+<div class="co ci"><strong>Application Recovery Controller (ARC):</strong> Provides <strong>Routing Controls</strong> (on/off switches for Route 53 health checks — one API call for Regional failover) and <strong>Readiness Checks</strong> (continuously validates DR resources match production: instance counts, ASG sizes, DB configurations). Use readiness checks to ensure warm standby is actually ready <em>before</em> you need it.</div>
+</div>
+
+<div id="d2-tips">
+<div class="tips">
+<div class="tph">🎯 Domain 2 Exam Tips &amp; Common Traps</div>
+<ul>
+<li><strong>RDS Multi-AZ standby is NOT readable.</strong> Only Aurora Replicas are readable. Multi-AZ standby is passive for HA only.</li>
+<li><strong>Read Replicas do NOT auto-failover.</strong> You must manually promote them. For automatic failover, use Multi-AZ.</li>
+<li><strong>Aurora failover = ~30s; RDS Multi-AZ = ~60–120s (DNS TTL).</strong> RDS Proxy reduces app-visible downtime to seconds by hiding the DNS flip.</li>
+<li><strong>DynamoDB PITR restores to a NEW table.</strong> You must redirect the application connection. In-place restore is NOT possible.</li>
+<li><strong>EBS snapshot restore has initialization latency.</strong> First access to uninitialized blocks reads from S3. Use Fast Snapshot Restore to pre-warm per AZ.</li>
+<li><strong>Automated RDS backups are deleted when the DB is deleted.</strong> Always take a final manual snapshot before deleting an RDS instance.</li>
+<li><strong>Scheduled Scaling runs BEFORE demand.</strong> Predictive Scaling also proactively scales using ML. Both complement target tracking for known cyclical patterns.</li>
+</ul>
+</div>
+<div class="tdv"><span class="tl">Exam Questions — Domain 2</span></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">A company's RDS MySQL Multi-AZ database fails over after an AZ outage. The ALB and ASG recover in 2 minutes, but the application shows database connection errors for an additional 4 minutes. The team wants total recovery under 2 minutes. What is the correct solution?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>Convert Multi-AZ to a Read Replica in a different AZ for faster failover.</li>
+<li onclick="hq(this,false)"><span class="ol">B.</span>Enable RDS Enhanced Monitoring for faster failure detection.</li>
+<li onclick="hq(this,true)"><span class="ol">C.</span>Place RDS Proxy in front of RDS. The Proxy maintains a warm connection pool and re-routes to the new primary in seconds, hiding the DNS TTL failover delay from the application.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Increase DB instance class to handle failover load faster.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: C.</strong> RDS Proxy holds persistent connection pools. During failover, it detects the new primary and routes existing connections without the app needing to reconnect. This eliminates the 1–2 min DNS propagation delay that causes the 4-minute connection error window. Option A is wrong — Read Replicas don't auto-failover. Option D has no effect on failover time.</div></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Response</div>
+<div class="qt">A financial services company requires RPO=0 and RTO &lt; 5 minutes for their production database. Which TWO architectural choices meet both requirements? (Select TWO)</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>RDS Multi-AZ with automated backups retained for 35 days.</li>
+<li onclick="hq(this,true)"><span class="ol">B.</span>Aurora Global Database with managed failover (RPO~0, RTO ~1 min for cross-Region).</li>
+<li onclick="hq(this,false)"><span class="ol">C.</span>DynamoDB with PITR enabled and on-demand capacity mode.</li>
+<li onclick="hq(this,true)"><span class="ol">D.</span>Aurora Multi-AZ cluster with RDS Proxy in front, Route 53 failover routing pointing to the Proxy endpoint.</li>
+<li onclick="hq(this,false)"><span class="ol">E.</span>RDS Read Replica in a secondary Region with Lambda-triggered promotion.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: B and D.</strong> B: Aurora Global uses synchronous replication (RPO=0). Managed failover promotes a secondary Region in ~1 minute (RTO &lt;5min). D: Aurora Multi-AZ with RDS Proxy achieves RPO=0 (synchronous replication) and RTO ~30s (Proxy hides DNS failover). A: RDS Multi-AZ has RPO=0 but RTO is 1–2 minutes without Proxy — borderline and risky for 5-min SLA. E: RDS Read Replica promotion takes 10+ minutes and is not automatic without custom code.</div></div>
+</div>
+</section>
+
+<!-- ══════════ DOMAIN 3 ══════════ -->
+<section class="dom" id="d3">
+<div class="dh"><div class="dnum n3">D3</div><div class="dtit"><h2>Deployment, Provisioning &amp; Automation</h2><div class="dwt">22% of scored content · Tasks 3.1 / 3.2 · Skills 3.1.1–3.2.2</div></div></div>
+
+<div id="d3-cfn">
+<div class="tdv"><span class="tl">Task 3.1 — Provision &amp; Maintain Cloud Resources</span></div>
+<h3>CloudFormation — Full Operational Guide</h3>
+<h4>Stack Status Troubleshooting</h4>
+<div class="tw"><table>
+<tr><th>Status</th><th>Root Cause</th><th>Recovery</th></tr>
+<tr><td><code>CREATE_FAILED</code></td><td>Resource creation error (IAM denied, limit exceeded, subnet full)</td><td>Check Events tab for <em>first</em> FAILED entry. Set DisableRollback=true on retry to inspect resources.</td></tr>
+<tr><td><code>ROLLBACK_FAILED</code></td><td>Rollback failed (resource manually deleted, dependency loop)</td><td>Manually fix blocking resource → <strong>Continue Rollback</strong> with skip option.</td></tr>
+<tr><td><code>UPDATE_ROLLBACK_FAILED</code></td><td>Update failed AND rollback also failed</td><td><strong>Continue Update Rollback</strong> → skip problematic resources → resolve manually.</td></tr>
+<tr><td><code>DELETE_FAILED</code></td><td>S3 bucket not empty; DeletionPolicy=Retain; dependency</td><td>Empty bucket / detach dependency / resolve, then retry delete.</td></tr>
+<tr><td><code>DRIFT_DETECTED</code></td><td>Resource modified outside CloudFormation</td><td>Run Drift Detection → either update stack to match, reimport resource, or fix manually.</td></tr>
+</table></div>
+<div class="rb">
+<div class="rbh"><span>🛠</span><h4>Runbook: Debug CloudFormation CREATE_FAILED</h4></div>
+<div class="rbb">
+<div class="rbs"><div class="rbn">1</div><div class="rbc"><strong>Open Stack Events</strong> — the <em>first</em> resource with <code>CREATE_FAILED</code> is the root cause. All subsequent ROLLBACK events are cleanup, not root cause.</div></div>
+<div class="rbs"><div class="rbn">2</div><div class="rbc"><strong>Read Status Reason carefully</strong> — <code>"is not authorized to perform"</code> = IAM; <code>"No supported architecture"</code> = wrong instance type for Region; <code>"Invalid id"</code> = resource reference error.</div></div>
+<div class="rbs"><div class="rbn">3</div><div class="rbc"><strong>Cross-reference CloudTrail</strong> — search for the API call CFN made. The <code>errorMessage</code> in CloudTrail often has more detail than the CFN status reason.</div></div>
+<div class="rbs"><div class="rbn">4</div><div class="rbc"><strong>Retry with DisableRollback=true</strong> — preserves partial stack for inspection. Use <code>cfn-lint</code> to validate template syntax before retrying.</div></div>
+<div class="rbs"><div class="rbn">5</div><div class="rbc"><strong>Fix the template</strong> — update IAM capability (<code>CAPABILITY_NAMED_IAM</code>), expand subnet CIDR, add <code>DependsOn</code> for ordering, or correct property value types.</div></div>
+</div>
+</div>
+<h4>CloudFormation Advanced Features</h4>
+<div class="tw"><table>
+<tr><th>Feature</th><th>Purpose</th><th>Key Detail</th></tr>
+<tr><td><strong>StackSets</strong></td><td>Deploy stacks across multiple accounts + Regions</td><td>Service-managed mode uses Organizations and auto-deploys to new accounts. Self-managed needs AdministratorRole + ExecutionRole. Use for security baselines.</td></tr>
+<tr><td><strong>Change Sets</strong></td><td>Preview impact before applying update</td><td><code>Replacement=True</code> = resource destroyed and recreated (causes downtime for DBs, EC2). Always review before applying to production.</td></tr>
+<tr><td><strong>Drift Detection</strong></td><td>Find out-of-band changes</td><td>Doesn't auto-fix. Detects property-level differences. Supports EC2, SG, RDS, S3, IAM, ELB.</td></tr>
+<tr><td><strong>Custom Resources</strong></td><td>Extend CFN with Lambda for non-native resources</td><td>Lambda receives Create/Update/Delete signals. Must call cfn-response with Success/Failed within 1hr timeout.</td></tr>
+<tr><td><strong>CFN Guard</strong></td><td>Policy-as-code template validation</td><td>Write rules enforced at CI/CD time: "all S3 buckets must have encryption enabled". Run before deploy.</td></tr>
+</table></div>
+</div>
+
+<div id="d3-cdk">
+<h3>CDK, SAM &amp; IaC Comparison</h3>
+<div class="g3">
+<div class="card"><h4>AWS CDK</h4><ul><li>TypeScript / Python / Java / Go</li><li>Generates CloudFormation templates</li><li>L1: raw CFN; L2: sensible defaults; L3: full patterns</li><li><code>cdk synth</code> → template; <code>cdk deploy</code> → stack</li><li><code>cdk diff</code> = change preview before deploy</li><li>CDK Pipelines: self-mutating CI/CD pipeline</li></ul></div>
+<div class="card"><h4>AWS SAM</h4><ul><li>Serverless Application Model — CFN extension</li><li>Simplified syntax for Lambda, API GW, DynamoDB</li><li><code>sam local invoke</code> for local Lambda testing</li><li><code>sam deploy --guided</code> for first deploy</li><li>Transforms to standard CFN before deployment</li><li>Ideal for serverless-first teams</li></ul></div>
+<div class="card"><h4>Terraform</h4><ul><li>HCL language, multi-cloud</li><li>State file → S3 + DynamoDB lock</li><li><code>terraform plan</code> = change preview</li><li>No auto-rollback on failure</li><li>Drift: <code>terraform refresh</code> then <code>plan</code></li><li>Modules = reusable components (Terraform Registry)</li></ul></div>
+</div>
+</div>
+
+<div id="d3-ami">
+<h3>EC2 Image Builder &amp; AMI Management</h3>
+<div class="diag"><pre>
+EC2 Image Builder Pipeline:
+
+  ┌──────────┐   ┌────────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+  │ Base AMI  │──▶│   Build Phase       │──▶│   Test Phase      │──▶│   Distribute      │
+  │(AL2023)  │   │ • CIS hardening     │   │ • CIS benchmark   │   │ • Target accounts │
+  └──────────┘   │ • SSM Agent         │   │ • Inspector scan  │   │ • Target Regions  │
+                 │ • CW Agent          │   │ • Boot check      │   │ • Share via RAM   │
+                 │ • App runtime       │   │ • Smoke test      │   └─────────┬────────┘
+                 │ • Patch baseline    │   └──────────────────┘             │
+                 └────────────────────┘                                     ▼
+                                                                   EventBridge event:
+                                                                   "Image State Change"
+                                                                   → Update Launch Template
+                                                                   → Notify ops team (SNS)</pre></div>
+<ul>
+<li><strong>Version AMI names:</strong> <code>myapp-golden-2024.01.15-v3</code> — enables rollback to previous AMI.</li>
+<li><strong>Use Launch Templates</strong> (not Launch Configurations) — support versioning, mixed instance types, Spot.</li>
+<li><strong>Share AMIs cross-account</strong> via RAM or Image Builder distribution. Must also share KMS key if encrypted.</li>
+<li><strong>Deprecate before deregistering</strong> — deregistering an AMI doesn't terminate running instances but prevents new launches.</li>
+</ul>
+</div>
+
+<div id="d3-containers">
+<h3>Container Deployments — ECR, ECS, EKS</h3>
+<div class="tw"><table>
+<tr><th>Service</th><th>Launch Types</th><th>Deployment Strategy</th><th>Key Operational Note</th></tr>
+<tr><td><strong>ECS</strong></td><td>EC2, Fargate, ECS Anywhere</td><td>Rolling (minimumHealthyPercent + maximumPercent) or Blue/Green via CodeDeploy</td><td>ECS Exec (SSM-based) for shell access to running containers. No SSH required.</td></tr>
+<tr><td><strong>EKS</strong></td><td>EC2 managed node groups, Fargate</td><td>RollingUpdate / Recreate (Deployment spec). Blue/Green via Argo Rollouts.</td><td>Managed node group rolling update for AMI upgrades. Set PodDisruptionBudgets.</td></tr>
+<tr><td><strong>ECR</strong></td><td>N/A (registry)</td><td>Image push → EventBridge event → trigger pipeline</td><td>Enable image scanning on push. Set lifecycle policies to expire untagged images. Enable cross-Region replication.</td></tr>
+</table></div>
+<pre><span class="c"># ECS Service: Blue/Green with CodeDeploy (requires ALB + DEPLOY controller)</span>
+{
+  "deploymentController": { "type": "CODE_DEPLOY" },
+  "loadBalancers": [{ "targetGroupArn": "arn:...", "containerName": "web", "containerPort": 80 }]
+}
+<span class="c"># CodeDeploy traffic shift options:
+# Canary10Percent5Minutes: 10% → wait 5min → 100%
+# Linear10PercentEvery1Minute: 10% more per minute
+# AllAtOnce: instant blue/green swap
+# Rollback trigger: CloudWatch alarm on 5xx error rate</span></pre>
+</div>
+
+<div id="d3-evtauto">
+<div class="tdv"><span class="tl">Task 3.2 — Automate Management of Existing Resources</span></div>
+<h3>Event-Driven Automation Patterns</h3>
+<h4>Step Functions for Complex Remediation</h4>
+<p>Use Step Functions (not chained Lambda) for multi-step remediation requiring: waits for long-running operations, parallel execution, conditional branching, or human approval steps.</p>
+<div class="diag"><pre>
+Config NON_COMPLIANT → EventBridge → Step Functions Express Workflow:
+
+  [1] Get resource details (Lambda: parse event)
+  [2] Check: is this production? (Lambda: tag lookup)
+       ├── YES → [3a] Create snapshot (SSM: AWS-CreateSnapshot)
+       │         [3b] Apply remediation (SSM: AWS-EnableS3BucketEncryption)
+       │         [3c] Wait 60s for Config re-evaluation
+       │         [3d] Notify team (SNS)
+       └── NO  → [3x] Apply remediation directly (SSM)
+                 [3y] Update ticket (Lambda → API Destination → Jira)</pre></div>
+<h4>AWS DataSync vs. Storage Gateway</h4>
+<div class="tw"><table>
+<tr><th>Scenario</th><th>Use This</th><th>Why</th></tr>
+<tr><td>One-time migration of on-prem file server to S3/EFS</td><td><strong>DataSync</strong></td><td>Faster (parallelized), data integrity validation, scheduling, bandwidth throttling</td></tr>
+<tr><td>Ongoing hybrid file access: on-prem apps accessing S3</td><td><strong>Storage Gateway (File GW)</strong></td><td>Presents S3 as NFS/SMB share with local cache. Transparent to on-prem applications.</td></tr>
+<tr><td>Ongoing tape backup replacement</td><td><strong>Storage Gateway (Tape GW)</strong></td><td>Virtual tape library interface compatible with existing backup software (Veeam, Commvault)</td></tr>
+<tr><td>Block storage for on-prem servers backed by S3</td><td><strong>Storage Gateway (Volume GW)</strong></td><td>iSCSI interface. Stored Volumes = full data on-prem + S3 backup. Cached = S3 primary + local cache.</td></tr>
+</table></div>
+</div>
+
+<div id="d3-deploy">
+<h3>Deployment Strategies Reference</h3>
+<div class="tw"><table>
+<tr><th>Strategy</th><th>Description</th><th>Rollback</th><th>Downtime</th><th>Best For</th></tr>
+<tr><td><strong>In-Place</strong></td><td>Update running instances directly</td><td>Re-deploy old version</td><td>Brief per instance</td><td>Stateful services where replacement is costly</td></tr>
+<tr><td><strong>Rolling</strong></td><td>Replace instances in configurable batches</td><td>Stop deployment; redeploy old</td><td>None if batch &lt; capacity</td><td>EC2 ASG rolling update, ECS rolling</td></tr>
+<tr><td><strong>Blue/Green</strong></td><td>New environment alongside old; switch traffic via DNS or LB</td><td>Switch traffic back instantly</td><td>None</td><td>Zero-downtime deploys; ECS CodeDeploy, Lambda aliases, Elastic Beanstalk</td></tr>
+<tr><td><strong>Canary</strong></td><td>Route small % (5–10%) to new; observe; increment</td><td>Route 100% back to old</td><td>None</td><td>High-risk changes; Lambda weighted aliases; API changes</td></tr>
+<tr><td><strong>Immutable</strong></td><td>New instances for every deploy; terminate old after validation</td><td>New deploy required</td><td>None</td><td>Elastic Beanstalk immutable; safest for compliance environments</td></tr>
+</table></div>
+</div>
+
+<div id="d3-tips">
+<div class="tips">
+<div class="tph">🎯 Domain 3 Exam Tips &amp; Common Traps</div>
+<ul>
+<li><strong>UPDATE_ROLLBACK_FAILED → Continue Update Rollback with skip.</strong> This is the only supported recovery path. Memorize it.</li>
+<li><strong>CloudFormation StackSets service-managed mode</strong> auto-deploys to new accounts via Organizations. Self-managed requires creating two IAM roles manually.</li>
+<li><strong>Change Set Replacement=True = resource destroyed and recreated.</strong> Always review before applying to production. This causes downtime for databases and EC2.</li>
+<li><strong>Image Builder builds on a temporary EC2 instance</strong> that needs its own IAM role. The instance is terminated after AMI creation.</li>
+<li><strong>ECS Blue/Green requires CodeDeploy integration</strong> — set deploymentController to CODE_DEPLOY when creating the ECS service.</li>
+<li><strong>DataSync = migration/sync. Storage Gateway = ongoing hybrid access.</strong> If on-prem apps need to keep accessing data as if it's local, use Storage Gateway.</li>
+<li><strong>State Manager re-applies on drift. Run Command is one-time.</strong> Know when to use each based on "continuous enforcement" vs. "one-time operation" language in questions.</li>
+</ul>
+</div>
+<div class="tdv"><span class="tl">Exam Questions — Domain 3</span></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">A CloudOps engineer needs to deploy a security baseline (CloudTrail trail, Config recorder, GuardDuty) across all 50 accounts in an AWS Organization, including accounts created in the future. What is the MOST automated approach?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>Create a CloudFormation template and deploy it manually to each of the 50 accounts using the CLI.</li>
+<li onclick="hq(this,true)"><span class="ol">B.</span>Create a CloudFormation StackSet with service-managed permissions targeting the entire Organization. Enable automatic deployment for new accounts.</li>
+<li onclick="hq(this,false)"><span class="ol">C.</span>Create a Lambda function triggered by Organizations CreateAccount events that deploys the CFN stack to each new account.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Use AWS Control Tower account factory to provision all new accounts with the security baseline.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: B.</strong> CloudFormation StackSets with service-managed permissions uses Organizations integration to deploy to all existing accounts and automatically to new accounts when they join. This is the exam-canonical answer for "org-wide baseline across all accounts including future ones." Option C works but requires custom code. Option D (Control Tower) is a broader governance framework — heavier than needed for a targeted baseline deployment.</div></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">An ECS Fargate service needs a zero-downtime update where, if error rates exceed 5% on the new version, the deployment automatically rolls back within 5 minutes. What is the correct approach?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>ECS rolling update with minimumHealthyPercent=100. Manually monitor CloudWatch and roll back if needed.</li>
+<li onclick="hq(this,true)"><span class="ol">B.</span>ECS Blue/Green deployment via CodeDeploy with a canary traffic-shifting strategy. Configure a CloudWatch alarm on 5xx error rate as a deployment rollback trigger in the CodeDeploy deployment config.</li>
+<li onclick="hq(this,false)"><span class="ol">C.</span>Route 53 weighted routing to shift 5% to the new ECS service, manually increasing weight after validation.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Lambda function monitors error rates and calls ECS UpdateService API to roll back if needed.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: B.</strong> ECS Blue/Green with CodeDeploy provides: (1) zero downtime via ALB traffic shifting, (2) native automatic rollback triggered by CloudWatch alarms — configured directly in the CodeDeploy deployment group. No custom code needed. Option A has no automatic rollback. Option C is manual and doesn't use CodeDeploy's native alarm-based rollback. Option D requires custom Lambda logic with more failure modes.</div></div>
+</div>
+</section>
+
+<!-- ══════════ DOMAIN 4 ══════════ -->
+<section class="dom" id="d4">
+<div class="dh"><div class="dnum n4">D4</div><div class="dtit"><h2>Security &amp; Compliance</h2><div class="dwt">16% of scored content · Tasks 4.1 / 4.2 · Skills 4.1.1–4.2.5</div></div></div>
+
+<div id="d4-iam">
+<div class="tdv"><span class="tl">Task 4.1 — Security &amp; Compliance Tools</span></div>
+<h3>IAM — Policy Evaluation &amp; Troubleshooting</h3>
+<div class="dtree">IAM Policy Evaluation Order (single account):
+
+REQUEST
+  │
+  ├─ Explicit DENY in any policy? → YES → DENY (final, no exceptions)
+  │                                ↓ NO
+  ├─ SCP (Organizations) allows? → NO  → DENY
+  │                               ↓ YES
+  ├─ Resource-based policy allows? → YES (same-account) → ALLOW
+  │                                 ↓ NO
+  ├─ Permission Boundary allows?   → NO  → DENY
+  │                                ↓ YES
+  ├─ Session Policy allows?        → NO  → DENY (if AssumeRole)
+  │                                ↓ YES
+  ├─ Identity-based policy allows? → YES → ALLOW
+  │                                ↓ NO
+  └─ IMPLICIT DENY
+
+CROSS-ACCOUNT: BOTH resource-based AND identity-based policies must allow.
+PERMISSION BOUNDARIES: Restrict maximum permissions. They do NOT grant permissions.
+MANAGEMENT ACCOUNT: SCPs never apply to the management (root) account.</div>
+
+<h4>IAM Troubleshooting Tools</h4>
+<div class="tw"><table>
+<tr><th>Tool</th><th>What It Does</th><th>When to Use</th></tr>
+<tr><td><strong>IAM Policy Simulator</strong></td><td>Test which actions are allowed/denied for a user/role without real API calls</td><td>Before deploying a policy change; verify exact permissions of a role</td></tr>
+<tr><td><strong>CloudTrail + Athena</strong></td><td>Query actual API calls; find AccessDenied errorCode events</td><td>Post-incident: "what did this role actually try to do and was it blocked?"</td></tr>
+<tr><td><strong>IAM Access Analyzer</strong></td><td>Identify resources accessible from outside the account/Org (S3, roles, KMS, SQS, Lambda)</td><td>Regular security audit; cross-account sharing review; before making resource public</td></tr>
+<tr><td><strong>Access Advisor (Last Accessed)</strong></td><td>Shows which services/actions were last used by role/user (up to 400 days)</td><td>Right-size overly permissive roles; implement least-privilege over time</td></tr>
+</table></div>
+<pre><span class="c"># Pattern 1: Deny all actions without MFA (except MFA bootstrap)</span>
+{ "Effect": "Deny",
+  "NotAction": ["iam:CreateVirtualMFADevice","iam:EnableMFADevice","sts:GetSessionToken"],
+  "Resource": "*",
+  "Condition": { "BoolIfExists": { "aws:MultiFactorAuthPresent": "false" } } }
+
+<span class="c"># Pattern 2: Restrict EC2 launches to specific Region + require mandatory tags</span>
+{ "Effect": "Allow", "Action": "ec2:RunInstances", "Resource": "*",
+  "Condition": {
+    "StringEquals": { "aws:RequestedRegion": "us-east-1" },
+    "StringLike":  { "aws:RequestTag/Environment": ["prod","staging"] } } }
+
+<span class="c"># IAM Policy Simulator via CLI</span>
+aws iam simulate-principal-policy \
+  --policy-source-arn "arn:aws:iam::123456789:role/AppRole" \
+  --action-names "s3:GetObject" "kms:Decrypt" \
+  --resource-arns "arn:aws:s3:::my-bucket/*"</pre>
+</div>
+
+<div id="d4-scp">
+<h3>SCPs &amp; Multi-Account Governance</h3>
+<div class="co cp"><strong>Key SCP Rule:</strong> SCPs do NOT grant permissions. They define the maximum permissions boundary. SCP allow + IAM allow = access. SCP deny = access denied regardless of IAM. The Management Account is NEVER affected by SCPs.</div>
+<div class="g2">
+<div class="card"><h4>Common SCP Use Cases</h4><ul><li>Restrict to specific Regions only</li><li>Prevent disabling CloudTrail / Config</li><li>Require encrypted EBS volumes at launch</li><li>Block root account API usage</li><li>Prevent leaving the Organization</li><li>Block creating internet-facing resources without approval</li></ul></div>
+<div class="card"><h4>Control Tower Governance</h4><ul><li>Account Factory: vend accounts with baseline guardrails</li><li>Guardrails = SCPs (preventive) + Config rules (detective)</li><li>Landing Zone: Log Archive + Audit accounts built in</li><li>Customizations for SCPs (CFCT): deploy custom SCPs via StackSets</li><li>Drift detection: alert when Org structure deviates from Landing Zone</li></ul></div>
+</div>
+<pre><span class="c"># SCP: Prevent disabling CloudTrail (attach to entire Org or specific OUs)</span>
+{ "Effect": "Deny",
+  "Action": ["cloudtrail:StopLogging","cloudtrail:DeleteTrail","cloudtrail:UpdateTrail"],
+  "Resource": "*" }
+
+<span class="c"># SCP: Require encrypted EBS volumes at EC2 launch</span>
+{ "Effect": "Deny", "Action": "ec2:RunInstances",
+  "Resource": "arn:aws:ec2:*:*:volume/*",
+  "Condition": { "Bool": { "ec2:Encrypted": "false" } } }</pre>
+</div>
+
+<div id="d4-kms">
+<div class="tdv"><span class="tl">Task 4.2 — Data &amp; Infrastructure Protection</span></div>
+<h3>KMS — Encryption at Rest</h3>
+<div class="tw"><table>
+<tr><th>Key Type</th><th>Who Controls</th><th>Auto-Rotation</th><th>Cross-Account</th><th>Cost</th></tr>
+<tr><td><strong>AWS Managed Key</strong></td><td>AWS (per service, e.g. <code>aws/s3</code>)</td><td>Every 3 years automatic</td><td>No</td><td>Free</td></tr>
+<tr><td><strong>Customer Managed Key (CMK)</strong></td><td>You manage key policy + rotation</td><td>Annual (opt-in) or manual</td><td>Yes (via key policy)</td><td>$1/key/month + API calls</td></tr>
+<tr><td><strong>AWS Owned Key</strong></td><td>AWS owns, shared across customers</td><td>AWS manages</td><td>No</td><td>Free (included in service cost)</td></tr>
+</table></div>
+<div class="rb">
+<div class="rbh"><span>🔑</span><h4>Runbook: Troubleshoot KMS AccessDenied Errors</h4></div>
+<div class="rbb">
+<div class="rbs"><div class="rbn">1</div><div class="rbc"><strong>Identify error type:</strong> <code>AccessDeniedException</code> = IAM or key policy. <code>DisabledException</code> = key is disabled. <code>KMSInvalidStateException</code> = key pending deletion.</div></div>
+<div class="rbs"><div class="rbn">2</div><div class="rbc"><strong>Check IAM role/instance profile:</strong> Must include <code>kms:Decrypt</code>, <code>kms:GenerateDataKey</code>, <code>kms:DescribeKey</code> in the IAM identity policy.</div></div>
+<div class="rbs"><div class="rbn">3</div><div class="rbc"><strong>Check KMS key policy:</strong> Key policy must explicitly include the IAM principal. Unlike S3, KMS requires explicit key policy grant even if IAM allows it. The key policy is the primary access control gate.</div></div>
+<div class="rbs"><div class="rbn">4</div><div class="rbc"><strong>Check key state:</strong> <code>aws kms describe-key --key-id arn:...</code> — key must be <code>Enabled</code>. Keys pending deletion or disabled cannot be used.</div></div>
+<div class="rbs"><div class="rbn">5</div><div class="rbc"><strong>Cross-account KMS:</strong> Requires (a) key policy grants the other account's principal access, AND (b) IAM policy in that account allows KMS actions. Both must allow — classic cross-account dual-policy pattern.</div></div>
+</div>
+</div>
+</div>
+
+<div id="d4-acm">
+<h3>ACM — Encryption in Transit</h3>
+<div class="tw"><table>
+<tr><th>Cert Type</th><th>Cost</th><th>Auto-Renewal</th><th>Integrates With</th></tr>
+<tr><td><strong>ACM Public Cert</strong></td><td>Free</td><td>Yes (at 60 days before expiry)</td><td>ALB, NLB, CloudFront, API Gateway, AppSync</td></tr>
+<tr><td><strong>ACM Imported Cert</strong></td><td>Free</td><td><strong>NO — manual renewal required</strong></td><td>Same as above</td></tr>
+<tr><td><strong>ACM Private CA</strong></td><td>$400/month/CA</td><td>Yes (via ACM)</td><td>Internal services, mTLS, on-prem clients</td></tr>
+</table></div>
+<div class="co cd"><strong>Critical:</strong> ACM certificates CANNOT be installed directly on EC2 instances. They integrate only with ELB, CloudFront, API Gateway, etc. For EC2 web servers (Apache, Nginx), use Let's Encrypt (certbot) or import a cert to the ELB in front.</div>
+<div class="co cw"><strong>Expiry monitoring for imported certs:</strong> Set CloudWatch alarm on <code>AWS/CertificateManager</code> metric <code>DaysToExpiry &lt; 45</code>. ACM-managed certs auto-renew but imported certs DO NOT — you must manually renew and re-import.</div>
+</div>
+
+<div id="d4-secrets">
+<h3>Secrets Manager vs. SSM Parameter Store</h3>
+<div class="tw"><table>
+<tr><th>Feature</th><th>Secrets Manager</th><th>SSM Parameter Store</th></tr>
+<tr><td>Cost</td><td>$0.40/secret/month + API calls</td><td>Standard: free; Advanced: $0.05/param/month</td></tr>
+<tr><td>Auto-rotation</td><td>Built-in Lambda rotation (RDS, Redshift, DocumentDB, custom)</td><td>None native; custom Lambda workaround</td></tr>
+<tr><td>Encryption</td><td>Always KMS (AWS Managed or CMK)</td><td>Standard: plaintext; SecureString: KMS</td></tr>
+<tr><td>Versioning</td><td>Automatic staging (AWSCURRENT, AWSPREVIOUS)</td><td>Up to 100 versions per parameter</td></tr>
+<tr><td>Cross-account</td><td>Yes (resource policy)</td><td>No (must copy or use RAM)</td></tr>
+<tr><td>Best For</td><td>DB passwords, API keys, OAuth tokens — anything requiring automatic rotation</td><td>App config, feature flags, hierarchical config: <code>/app/prod/db_host</code></td></tr>
+</table></div>
+</div>
+
+<div id="d4-detective">
+<h3>Detective Security Controls</h3>
+<div class="tw"><table>
+<tr><th>Service</th><th>Data Sources</th><th>Output</th><th>Remediation Pattern</th></tr>
+<tr><td><strong>GuardDuty</strong></td><td>CloudTrail, VPC Flow Logs, DNS logs, EKS audit, S3 data events, RDS login, Lambda network</td><td>Findings by severity with MITRE ATT&CK mapping</td><td>EventBridge → Lambda isolate + SSM rotate credentials</td></tr>
+<tr><td><strong>Inspector</strong></td><td>EC2 OS packages (agentless via SSM), ECR images on push, Lambda function packages</td><td>CVE findings with CVSS score + exploitability</td><td>EventBridge → SSM Patch → verify → close finding</td></tr>
+<tr><td><strong>Security Hub</strong></td><td>Aggregates: GuardDuty, Inspector, Macie, Config, Firewall Manager, IAM Access Analyzer</td><td>ASFF-normalized findings. Security standard scores (CIS, PCI-DSS, NIST). Cross-account aggregation.</td><td>Custom Actions → EventBridge → Lambda/SSM batch remediation</td></tr>
+<tr><td><strong>AWS Config</strong></td><td>Resource configuration changes, evaluated against rules</td><td>COMPLIANT / NON_COMPLIANT per resource per rule. Configuration timeline.</td><td>Remediation Actions (SSM Automation docs) triggered automatically</td></tr>
+<tr><td><strong>Amazon Macie</strong></td><td>S3 buckets — discovers and classifies PII, credentials, financial data</td><td>Findings with S3 object location, data type, occurrence count</td><td>EventBridge → Lambda → tag/quarantine object or notify DLP team</td></tr>
+<tr><td><strong>Trusted Advisor</strong></td><td>Account-level checks: Cost, Performance, Security, Fault Tolerance, Service Limits</td><td>Status: OK / Warning / Error with recommendations</td><td>Programmatic via <code>aws support describe-trusted-advisor-checks</code> → automate fixes</td></tr>
+</table></div>
+</div>
+
+<div id="d4-waf">
+<h3>WAF, Shield &amp; Network Firewall</h3>
+<div class="tw"><table>
+<tr><th>Service</th><th>Purpose</th><th>Attach To</th><th>Key Config</th></tr>
+<tr><td><strong>AWS WAF</strong></td><td>L7 HTTP inspection: SQLi, XSS, rate limiting, geo-blocking, custom rules</td><td>ALB, CloudFront, API Gateway, AppSync</td><td>Web ACL with rule groups. AWS Managed Rules (AWSManagedRulesCommonRuleSet). Use COUNT mode before BLOCK for testing.</td></tr>
+<tr><td><strong>Shield Standard</strong></td><td>Always-on L3/L4 DDoS protection</td><td>All AWS resources automatically</td><td>Free. SYN floods, UDP reflection. Zero config.</td></tr>
+<tr><td><strong>Shield Advanced</strong></td><td>Enhanced DDoS + 24/7 DRT + cost protection + near-real-time metrics</td><td>EC2, ALB, NLB, CloudFront, Global Accelerator, Route 53</td><td>$3,000/month/organization. DDoS cost protection = AWS credits for scaling costs caused by an attack.</td></tr>
+<tr><td><strong>Network Firewall</strong></td><td>Stateful L3–L7 inspection, IPS/IDS, domain-based filtering for all VPC traffic</td><td>VPC (dedicated firewall subnet)</td><td>Stateful rules: 5-tuple, domain lists (<code>*.malware.com</code>), Suricata IPS-compatible rules.</td></tr>
+</table></div>
+<div class="co cw"><strong>WAF vs. Network Firewall:</strong> WAF operates at L7 HTTP/HTTPS only, on specific AWS endpoints (ALB, CloudFront). Network Firewall operates at VPC level for ALL TCP/UDP traffic including non-HTTP. Use both: Network Firewall for VPC-level east-west and egress protection; WAF for application-level protection on public-facing endpoints.</div>
+</div>
+
+<div id="d4-tips">
+<div class="tips">
+<div class="tph">🎯 Domain 4 Exam Tips &amp; Common Traps</div>
+<ul>
+<li><strong>Explicit DENY always wins.</strong> Even if an IAM policy allows an action, an explicit deny in any policy (SCP, permission boundary, resource policy) blocks it. No exceptions.</li>
+<li><strong>SCPs don't affect the Management Account.</strong> You cannot restrict the root account with SCPs.</li>
+<li><strong>KMS key policy is required IN ADDITION to IAM policy</strong> for cross-account access. Both must allow. This is different from S3 bucket policies where identity policy alone can be enough.</li>
+<li><strong>ACM certs cannot be installed directly on EC2.</strong> They attach only to ELB, CloudFront, API GW. For EC2 web servers, use certbot or attach an ELB with ACM cert in front.</li>
+<li><strong>Imported ACM certs do NOT auto-renew.</strong> Set CloudWatch alarm on DaysToExpiry &lt; 45.</li>
+<li><strong>Secrets Manager = auto-rotation. Parameter Store = no native rotation.</strong> If the question mentions "automatically rotate DB credentials," the answer involves Secrets Manager.</li>
+<li><strong>GuardDuty detects; it does NOT remediate.</strong> You must set up EventBridge → Lambda/SSM to act on GuardDuty findings.</li>
+<li><strong>Shield Advanced = $3,000/month for the entire Organization</strong> (not per resource). Covers all subscribed resources in all enrolled accounts.</li>
+<li><strong>Permission Boundaries restrict maximum permissions — they do NOT grant permissions.</strong> A boundary of S3:* doesn't grant S3 access; it only limits what identity policies can grant.</li>
+</ul>
+</div>
+<div class="tdv"><span class="tl">Exam Questions — Domain 4</span></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">A security engineer finds that an IAM role used by EC2 instances has AdministratorAccess attached but should only need S3 and SQS. The engineer needs to immediately restrict the blast radius of a potential compromise while a proper least-privilege policy is being written. What is the FASTEST solution?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>Detach AdministratorAccess and create a new S3 + SQS policy immediately.</li>
+<li onclick="hq(this,true)"><span class="ol">B.</span>Attach a Permission Boundary to the role that only allows S3 and SQS. The existing AdministratorAccess remains but the boundary immediately restricts effective permissions to the intersection.</li>
+<li onclick="hq(this,false)"><span class="ol">C.</span>Create a new IAM role with only S3 and SQS access and migrate all instances to it.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Add an SCP to the account denying all actions except S3 and SQS.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: B.</strong> A Permission Boundary is a single IAM managed policy that immediately limits effective permissions to the intersection of the identity policy and the boundary. One API call, no service disruption, no instance migration. Option A risks breaking the application if the new policy is incomplete. Option C requires migrating instances (operational risk). Option D (SCP) affects the entire account — collateral damage to all other services and roles.</div></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Response</div>
+<div class="qt">A compliance team requires that no S3 buckets in any account have public access, AND violations are automatically remediated within 15 minutes. Which TWO components are required? (Select TWO)</div>
+<ul class="qo">
+<li onclick="hq(this,true)"><span class="ol">A.</span>AWS Config managed rule <code>s3-bucket-public-read-prohibited</code> with auto-remediation using SSM Automation <code>AWS-DisableS3BucketPublicReadWrite</code>.</li>
+<li onclick="hq(this,false)"><span class="ol">B.</span>Amazon Macie enabled on all S3 buckets, findings exported to Security Hub.</li>
+<li onclick="hq(this,false)"><span class="ol">C.</span>GuardDuty S3 protection enabled with EventBridge rules triggering Lambda.</li>
+<li onclick="hq(this,true)"><span class="ol">D.</span>CloudFormation StackSets deploying the Config rule and auto-remediation configuration to all accounts in the Organization.</li>
+<li onclick="hq(this,false)"><span class="ol">E.</span>IAM Access Analyzer with archive rules for S3, triggering SNS notifications.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: A and D.</strong> A: AWS Config provides continuous evaluation and native auto-remediation via SSM Automation — achieving &lt;15 minute detection and remediation. D: StackSets deploys the Config rule to all accounts org-wide. B (Macie) detects sensitive data, not public access configuration. C (GuardDuty) detects suspicious access patterns, not bucket configuration. E (Access Analyzer) finds external access but doesn't provide automated remediation.</div></div>
+</div>
+</section>
+
+<!-- ══════════ DOMAIN 5 ══════════ -->
+<section class="dom" id="d5">
+<div class="dh"><div class="dnum n5">D5</div><div class="dtit"><h2>Networking &amp; Content Delivery</h2><div class="dwt">18% of scored content · Tasks 5.1 / 5.2 / 5.3 · Skills 5.1.1–5.3.5</div></div></div>
+
+<div id="d5-vpc">
+<div class="tdv"><span class="tl">Task 5.1 — Networking Features &amp; Connectivity</span></div>
+<h3>VPC Architecture — Complete Reference</h3>
+<div class="diag"><pre>
+VPC: 10.0.0.0/16  (65,534 usable IPs)
+
+  ┌─────────────────────────┐  ┌─────────────────────────┐
+  │       AZ: us-east-1a     │  │       AZ: us-east-1b     │
+  │                          │  │                          │
+  │  Public: 10.0.1.0/24    │  │  Public: 10.0.2.0/24    │
+  │  IGW route 0.0.0.0/0    │  │  IGW route 0.0.0.0/0    │
+  │  ALB node / NAT GW      │  │  ALB node / NAT GW      │
+  │          │               │  │          │               │
+  │  App: 10.0.11.0/24      │  │  App: 10.0.12.0/24      │
+  │  NAT GW route 0.0.0.0/0 │  │  NAT GW route 0.0.0.0/0 │
+  │  EC2 / ECS tasks        │  │  EC2 / ECS tasks        │
+  │          │               │  │          │               │
+  │  DB: 10.0.21.0/24       │  │  DB: 10.0.22.0/24       │
+  │  No internet route       │  │  No internet route       │
+  │  RDS / ElastiCache       │  │  RDS Standby / Cache     │
+  └─────────────────────────┘  └─────────────────────────┘
+
+  Internet Gateway (IGW)      — Public subnets route 0.0.0.0/0 → IGW
+  NAT Gateway (per AZ)        — Private subnets route 0.0.0.0/0 → NAT GW
+  S3/DynamoDB Gateway Endpoint — Free; avoids NAT for AWS APIs
+  Interface Endpoint (PrivateLink) — Private access to 100+ AWS services
+  Transit Gateway              — Connects multiple VPCs + on-prem
+  VPC IPAM                    — Central CIDR management across org accounts</pre></div>
+
+<h4>Security Groups vs. Network ACLs</h4>
+<div class="tw"><table>
+<tr><th>Property</th><th>Security Group</th><th>Network ACL</th></tr>
+<tr><td>Level</td><td>Instance / ENI</td><td>Subnet boundary</td></tr>
+<tr><td>Stateful / Stateless</td><td>Stateful — return traffic auto-allowed</td><td><strong>Stateless — must explicitly allow both directions</strong></td></tr>
+<tr><td>Rule types</td><td>Allow only (no deny rules)</td><td>Allow AND Deny; first match wins (lowest rule number)</td></tr>
+<tr><td>Evaluation</td><td>All rules evaluated; most permissive wins</td><td>Rules evaluated in numeric order; stops at first match</td></tr>
+<tr><td>Default</td><td>Deny all inbound / Allow all outbound</td><td>Allow all in and out (custom NACLs start with DENY ALL)</td></tr>
+</table></div>
+<div class="co cw"><strong>NACL ephemeral ports trap:</strong> For stateless NACLs, inbound rules allow the request but you ALSO need an outbound rule allowing ephemeral ports (1024–65535) for the response to reach the client. Common exam question where connectivity fails only intermittently due to missing outbound NACL ephemeral port rule.</div>
+</div>
+
+<div id="d5-connect">
+<h3>VPC Connectivity Options — Decision Matrix</h3>
+<div class="tw"><table>
+<tr><th>Option</th><th>Transitive?</th><th>IP Overlap OK?</th><th>Best For</th></tr>
+<tr><td><strong>VPC Peering</strong></td><td>No — A→B→C needs A→C peering too</td><td>No — CIDRs must be unique</td><td>Simple 2-3 VPC topologies. No per-GB data cost within Region.</td></tr>
+<tr><td><strong>Transit Gateway</strong></td><td>Yes (via route tables)</td><td>No (for communicating VPCs)</td><td>Any scale &gt;3 VPCs, centralized routing, on-prem. 50Gbps/attachment.</td></tr>
+<tr><td><strong>PrivateLink (Interface Endpoint)</strong></td><td>N/A (service model)</td><td>Yes — unidirectional service exposure</td><td>Expose service to consumers without full VPC connectivity. No route tables needed.</td></tr>
+<tr><td><strong>VPC Gateway Endpoint</strong></td><td>No</td><td>N/A</td><td>S3 and DynamoDB only. <strong>Free.</strong> Route table entry needed.</td></tr>
+<tr><td><strong>Site-to-Site VPN</strong></td><td>Via TGW</td><td>N/A</td><td>On-premises to AWS. 1.25Gbps/tunnel. Quick setup. Two tunnels for HA.</td></tr>
+</table></div>
+<div class="co ci"><strong>Client VPN (for operator access):</strong> OpenVPN-based remote access for administrators. Authenticate via Active Directory (AWS Managed AD), SAML IdP, or certificate-based mTLS. Split-tunnel mode routes only AWS traffic through VPN. Full-tunnel routes all traffic. Associate with VPC subnets. Essential for private subnet access from engineer laptops.</div>
+</div>
+
+<div id="d5-cf">
+<div class="tdv"><span class="tl">Task 5.2 — Domains, DNS, Content Delivery</span></div>
+<h3>CloudFront — Deep Operational Guide</h3>
+<div class="tw"><table>
+<tr><th>Feature</th><th>Operational Detail</th><th>Action</th></tr>
+<tr><td><strong>Cache Policy</strong></td><td>Defines cache key: URL + specified headers + cookies + query strings. Separate from Origin Request Policy.</td><td>Minimize cache key components → higher hit ratio. Only include what actually varies content.</td></tr>
+<tr><td><strong>TTL Control</strong></td><td>Origin Cache-Control overrides default TTL. <code>no-store</code> bypasses cache entirely.</td><td>Use versioned filenames for static assets — no invalidations needed in CI/CD.</td></tr>
+<tr><td><strong>Invalidation</strong></td><td>Propagates to all PoPs in ~60s. Path <code>/*</code> invalidates everything.</td><td>First 1,000 paths/month free then $0.005 each. Use versioning instead for frequent deploys.</td></tr>
+<tr><td><strong>Origin Shield</strong></td><td>Regional caching layer between edge PoPs and origin. Collapses cache misses.</td><td>Enable in Region nearest to origin to reduce origin load up to 90%.</td></tr>
+<tr><td><strong>Functions vs Lambda@Edge</strong></td><td>CF Functions: sub-ms, viewer request/response only. Lambda@Edge: full Lambda, all 4 trigger points.</td><td>Functions for URL rewrite, header manipulation. Lambda@Edge for auth, A/B, complex transforms.</td></tr>
+</table></div>
+<div class="rb">
+<div class="rbh"><span>🔧</span><h4>Runbook: CloudFront Troubleshooting Decision Tree</h4></div>
+<div class="rbb">
+<div class="rbs"><div class="rbn">1</div><div class="rbc"><strong>Check <code>X-Cache</code> header:</strong> <code>Hit from cloudfront</code> = served from edge. <code>Miss from cloudfront</code> = forwarded to origin. <code>RefreshHit</code> = revalidated (304 Not Modified).</div></div>
+<div class="rbs"><div class="rbn">2</div><div class="rbc"><strong>Always MISS?</strong> Inspect cache key. Unique Authorization headers, User-Agent, or query strings in cache key = 0% hit rate. Each unique combination is a separate cache entry. Simplify the cache policy.</div></div>
+<div class="rbs"><div class="rbn">3</div><div class="rbc"><strong>Origin sending no-cache?</strong> CloudFront respects origin Cache-Control headers. If origin sends <code>no-store</code> or <code>max-age=0</code>, CloudFront won't cache regardless of CloudFront TTL settings. Fix at the origin.</div></div>
+<div class="rbs"><div class="rbn">4</div><div class="rbc"><strong>5xx errors from origin?</strong> Check CloudFront access logs: field <code>x-edge-result-type</code> and <code>x-edge-detailed-result-type</code>. Check origin health (EC2/ELB). Review origin response timeout config.</div></div>
+<div class="rbs"><div class="rbn">5</div><div class="rbc"><strong>403 Forbidden?</strong> Check: (a) S3 Origin Access Control (OAC) — bucket policy must allow CloudFront service principal. (b) WAF Web ACL blocking the request — check WAF sampled requests. (c) Geo restriction.</div></div>
+</div>
+</div>
+</div>
+
+<div id="d5-ga">
+<h3>Global Accelerator vs. CloudFront</h3>
+<div class="tw"><table>
+<tr><th>Attribute</th><th>CloudFront</th><th>Global Accelerator</th></tr>
+<tr><td>Layer</td><td>L7 (HTTP/HTTPS)</td><td>L3/L4 (TCP, UDP, HTTP/HTTPS)</td></tr>
+<tr><td>Caching</td><td>Yes — content cached at edge PoPs</td><td>No — proxies all traffic to endpoints</td></tr>
+<tr><td>IP Addresses</td><td>Dynamic anycast IPs</td><td><strong>Two static anycast IPs</strong> (allowlist-friendly)</td></tr>
+<tr><td>Failover</td><td>DNS-based (60s+ propagation)</td><td>Network-level (10–30 seconds)</td></tr>
+<tr><td>Protocols</td><td>HTTP, HTTPS, WebSocket</td><td>TCP, UDP, HTTP, HTTPS</td></tr>
+<tr><td>Best For</td><td>Web content, APIs, S3 static sites, video streaming</td><td>Gaming (UDP), IoT, VoIP, apps needing static IPs, non-HTTP workloads</td></tr>
+</table></div>
+</div>
+
+<div id="d5-dns">
+<h3>Route 53 — Routing Policies &amp; Hybrid DNS</h3>
+<div class="tw"><table>
+<tr><th>Policy</th><th>Use Case</th><th>Health Check?</th><th>Key Detail</th></tr>
+<tr><td><strong>Simple</strong></td><td>Single resource; static IP/DNS</td><td>No</td><td>Multiple values → client picks randomly</td></tr>
+<tr><td><strong>Failover</strong></td><td>Active/Passive DR</td><td>Yes (on primary)</td><td>DNS returns secondary when primary health check fails</td></tr>
+<tr><td><strong>Weighted</strong></td><td>Canary, blue/green, A/B</td><td>Optional</td><td>Weight 0 = never receives traffic. Values don't need to sum to 100.</td></tr>
+<tr><td><strong>Latency</strong></td><td>Route to lowest-latency Region</td><td>Optional</td><td>Based on AWS latency measurements from user's location. Not geographic proximity.</td></tr>
+<tr><td><strong>Geolocation</strong></td><td>Route by user continent/country/US state</td><td>Optional</td><td>Must have Default record for unmatched locations. Good for GDPR EU-only routing.</td></tr>
+<tr><td><strong>Geoproximity</strong></td><td>Route by geographic bias</td><td>Optional</td><td>Requires Traffic Flow. Bias value shifts geographic boundary.</td></tr>
+<tr><td><strong>Multivalue Answer</strong></td><td>DNS-level LB (up to 8 healthy IPs)</td><td>Yes</td><td>Not a substitute for ELB — no session persistence, no TLS offload.</td></tr>
+<tr><td><strong>IP-based</strong></td><td>Route by client CIDR (ISP/corporate ranges)</td><td>Optional</td><td>Define CIDR-to-location mappings. Route corporate users to internal endpoints.</td></tr>
+</table></div>
+<h4>Route 53 Resolver — Hybrid DNS</h4>
+<div class="diag"><pre>
+Hybrid DNS Resolution:
+
+ON-PREMISES                              AWS VPC
+┌──────────────┐                        ┌──────────────────────────────┐
+│ On-prem DNS  │ ←── Forward queries ── │ Inbound Endpoint             │
+│ 10.0.0.53    │     to resolve          │ (ENIs in private subnets)    │
+│              │     *.corp.aws.internal │ Resolves private hosted zones│
+└──────────────┘                        └──────────────────────────────┘
+
+┌──────────────┐ ←── Forward queries ── ┌──────────────────────────────┐
+│ On-prem DNS  │     for on-prem domains │ Outbound Endpoint            │
+│ 10.0.0.53    │                         │ Resolver Rule:               │
+│              │                         │ *.corporate.internal →       │
+│              │                         │   10.0.0.53 (on-prem DNS)    │
+└──────────────┘                        └──────────────────────────────┘</pre></div>
+<div class="co ci"><strong>Route 53 DNS Firewall:</strong> Inspects outbound DNS queries from VPC resources. Block known malicious domains using AWS-managed or custom domain block lists. Prevents DNS-based data exfiltration and malware C2 communication. Configure per VPC. Logs blocked queries to CloudWatch Logs.</div>
+</div>
+
+<div id="d5-hybrid">
+<h3>Hybrid Connectivity Troubleshooting</h3>
+<div class="tw"><table>
+<tr><th>Symptom</th><th>Check First</th><th>Cause</th><th>Resolution</th></tr>
+<tr><td>VPN tunnel Down</td><td><code>TunnelState = 0</code> metric</td><td>IKE Phase 1/2 parameter mismatch (DH group, encryption, lifetime)</td><td>Match VGW config: DH group 14+, AES-256, SHA-256. Enable DPD. Ensure no firewall blocking UDP 500/4500.</td></tr>
+<tr><td>Tunnel Up, no traffic</td><td>VPC route table, BGP state</td><td>Missing route to on-prem CIDR; BGP not advertising routes</td><td>Add static route (VGW → on-prem CIDR) or verify BGP route advertisement. Check SG allows on-prem CIDR.</td></tr>
+<tr><td>Client VPN — can't reach VPC</td><td>Authorization rules, DNS config</td><td>No authorization rule for destination CIDR; DNS resolving to public IP instead of private</td><td>Add authorization rule for <code>10.0.0.0/16</code>. Ensure private hosted zone or Route 53 Resolver resolves internal DNS names correctly.</td></tr>
+</table></div>
+</div>
+
+<div id="d5-ts">
+<div class="tdv"><span class="tl">Task 5.3 — Troubleshoot Network Connectivity</span></div>
+<h3>Network Troubleshooting Decision Tree</h3>
+<div class="dtree">EC2 CANNOT REACH DESTINATION
+  │
+  ├── Same VPC? → Check SG inbound on destination | NACL both directions | route table
+  │
+  ├── Internet (0.0.0.0/0)?
+  │     ├── Public subnet → IGW attached | route 0.0.0.0/0 → IGW | EIP or public IP on instance
+  │     └── Private subnet → route 0.0.0.0/0 → NAT GW | NAT GW is in PUBLIC subnet with EIP
+  │
+  ├── AWS Service (S3, SSM, Secrets Manager)?
+  │     ├── No internet → Add VPC Endpoint (Gateway: S3/DynamoDB free; Interface: others)
+  │     └── Via NAT → Check NAT route + SG outbound HTTPS 443 allowed
+  │
+  ├── Cross-VPC (Peering or TGW)?
+  │     ├── Peering → Route in BOTH VPCs | SG allows peered CIDR | No overlapping CIDRs
+  │     └── TGW → TGW attachment accepted | TGW route table has destination | SG allows TGW CIDR
+  │
+  └── On-premises (VPN)?
+        ├── Tunnel down? → IKE parameters mismatch
+        └── Tunnel up, no traffic? → BGP routes | VPC route table | SG outbound rules</div>
+
+<h4>Log Analysis Reference</h4>
+<div class="tw"><table>
+<tr><th>Log Source</th><th>Key Fields</th><th>What to Look For</th></tr>
+<tr><td><strong>VPC Flow Logs</strong></td><td>srcaddr, dstaddr, dstport, protocol, action (ACCEPT/REJECT)</td><td>REJECT = blocked by SG or NACL. ACCEPT but still failing = application-layer issue.</td></tr>
+<tr><td><strong>ALB Access Logs</strong></td><td>elb_status_code, target_status_code, target_processing_time, error_reason</td><td>502 (target error), 503 (no healthy targets), 504 (gateway timeout). Compare ELB vs target status codes.</td></tr>
+<tr><td><strong>CloudFront Logs</strong></td><td>sc-status, x-edge-result-type, x-edge-detailed-result-type, c-ip</td><td>x-edge-result-type: Hit/Miss/Error/LimitExceeded. sc-status for HTTP errors at edge.</td></tr>
+<tr><td><strong>WAF Logs</strong></td><td>terminatingRuleId, action (ALLOW/BLOCK/COUNT), httpRequest.clientIp, httpRequest.uri</td><td>Identify which rule is blocking. Use COUNT mode to test new rules without blocking.</td></tr>
+</table></div>
+
+<h4>VPC Reachability Analyzer</h4>
+<pre><span class="c"># Step 1: Define the path</span>
+aws ec2 create-network-insights-path \
+  --source i-abc123 --destination i-def456 \
+  --protocol tcp --destination-port 443
+
+<span class="c"># Step 2: Run analysis (no real traffic sent)</span>
+aws ec2 start-network-insights-analysis --network-insights-path-id nip-xxxxx
+
+<span class="c"># Step 3: Read results — shows EXACTLY which component blocks traffic</span>
+aws ec2 describe-network-insights-analyses \
+  --network-insights-analysis-ids nia-xxxxx \
+  --query "NetworkInsightsAnalyses[0].{Reachable:NetworkPathFound,Explanations:Explanations}"</pre>
+
+<h4>VPC Flow Logs — Athena Queries</h4>
+<pre><span class="c">-- All REJECTED traffic in last 24 hours</span>
+SELECT srcaddr, dstaddr, dstport, protocol, packets
+FROM vpc_flow_logs
+WHERE action = 'REJECT'
+  AND from_iso8601_timestamp(start) > current_timestamp - interval '24' hour
+ORDER BY packets DESC LIMIT 100;
+
+<span class="c">-- Detect port scanning (many unique dst ports from same src)</span>
+SELECT srcaddr, COUNT(DISTINCT dstport) as unique_ports, SUM(packets) as packets
+FROM vpc_flow_logs
+WHERE action = 'REJECT'
+  AND from_iso8601_timestamp(start) > current_timestamp - interval '1' hour
+GROUP BY srcaddr
+HAVING COUNT(DISTINCT dstport) > 20
+ORDER BY unique_ports DESC;</pre>
+<div class="co cw"><strong>Flow Logs do NOT capture:</strong> 169.254.169.254 (IMDS), 169.254.169.253 (DNS), DHCP, Windows KMS activation, or Traffic Mirroring traffic.</div>
+</div>
+
+<div id="d5-tips">
+<div class="tips">
+<div class="tph">🎯 Domain 5 Exam Tips &amp; Common Traps</div>
+<ul>
+<li><strong>NACLs are stateless — allow ephemeral ports (1024–65535) outbound.</strong> Most connectivity issues in NACL-heavy questions come from missing outbound rules.</li>
+<li><strong>VPC Peering is NOT transitive.</strong> A→B and B→C does not allow A→C. Use Transit Gateway for hub-and-spoke or any transitive routing need.</li>
+<li><strong>S3/DynamoDB Gateway Endpoints are free.</strong> Interface Endpoints cost ~$7/month. Always prefer Gateway Endpoints for S3 and DynamoDB from private subnets.</li>
+<li><strong>NAT Gateway MUST be in a PUBLIC subnet with an Elastic IP.</strong> Placing NAT GW in a private subnet is a common architecture mistake that results in no outbound internet connectivity.</li>
+<li><strong>CloudFront MISS despite correct TTL → check origin Cache-Control headers.</strong> CloudFront respects <code>no-store</code> from origin regardless of distribution settings.</li>
+<li><strong>Global Accelerator = static anycast IPs.</strong> Use when clients need to allowlist static IPs, or for non-HTTP protocols (UDP, gaming, IoT).</li>
+<li><strong>Latency routing ≠ Geolocation routing.</strong> Latency routes to lowest-latency AWS Region. Geolocation routes based on the user's geographic location regardless of latency.</li>
+<li><strong>Flow Logs ACCEPT but traffic still fails = application layer problem.</strong> The network path is open. Check the application, DB connection string, or listen port next.</li>
+</ul>
+</div>
+<div class="tdv"><span class="tl">Exam Questions — Domain 5</span></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">EC2 instances in a private subnet make HTTP calls to external APIs via NAT Gateway. The company wants to inspect and block these calls based on domain names (e.g., block <code>*.malware.com</code>) without breaking legitimate traffic. What should the engineer configure?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>Add NACL deny rules for IP addresses of known malicious domains.</li>
+<li onclick="hq(this,false)"><span class="ol">B.</span>Configure a WAF Web ACL on the NAT Gateway to inspect outbound HTTP traffic.</li>
+<li onclick="hq(this,true)"><span class="ol">C.</span>Deploy AWS Network Firewall in a dedicated subnet with a domain-based stateful rule blocking <code>*.malware.com</code>. Route traffic through the firewall before NAT Gateway.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Enable Route 53 DNS Firewall with a managed domain blocklist and associate it with the VPC.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: C.</strong> AWS Network Firewall provides stateful L7 inspection with domain-based filtering for ALL TCP/UDP/HTTP VPC traffic. Routing: private subnet → Network Firewall → NAT GW → Internet. Option A (NACL by IP) fails — malicious domain IPs change constantly. Option B (WAF on NAT GW) is wrong — WAF doesn't attach to NAT Gateways. Option D (DNS Firewall) blocks DNS resolution but doesn't block connections to direct IP addresses that bypass DNS lookups entirely.</div></div>
+
+<div class="eq"><div class="qlb">⚡ Scenario · Multiple Choice</div>
+<div class="qt">A CloudFront distribution serves a dynamic API where responses vary per authenticated user (JWT in Authorization header). The cache hit ratio is consistently 0%. What is the root cause and correct fix?</div>
+<ul class="qo">
+<li onclick="hq(this,false)"><span class="ol">A.</span>Dynamic APIs should not use CloudFront. Remove it from the architecture.</li>
+<li onclick="hq(this,false)"><span class="ol">B.</span>Create a CloudFront invalidation for all paths every 5 minutes.</li>
+<li onclick="hq(this,true)"><span class="ol">C.</span>The Authorization header is included in the cache key, creating a unique cache entry per user token. Remove Authorization from the cache key. Use an Origin Request Policy to still forward it to origin. For paths that cannot be shared, set TTL=0.</li>
+<li onclick="hq(this,false)"><span class="ol">D.</span>Enable CloudFront Origin Shield to improve cache hit ratio.</li>
+</ul>
+<button class="sbtn" onclick="ta(this)">Show Explanation</button>
+<div class="qa"><strong>Correct: C.</strong> When Authorization header is in the cache key, every unique JWT = unique cache entry = 0% hit rate. Fix: remove Authorization from the cache key; use Origin Request Policy to still forward it to the origin for validation without polluting the cache key. For truly per-user content that cannot be shared, set min TTL=0 on that cache behavior. Option D (Origin Shield) consolidates cache misses but cannot help when effective TTL is 0 due to unique cache keys on every request.</div></div>
+</div>
+</section>
+
+<!-- ══════════ COST ══════════ -->
+<section class="dom" id="cost">
+<div class="dh">
+<div class="dnum" style="background:rgba(245,200,66,.12);color:var(--a6);border:1px solid rgba(245,200,66,.3);font-size:18px">$</div>
+<div class="dtit"><h2>Cost &amp; Financial Management</h2><div class="dwt">In-Scope: Cost Explorer · Cost &amp; Usage Reports · Savings Plans · Budgets</div></div>
+</div>
+<p>Cost optimization is tested as architectural decision-making (right-sizing, storage class selection, network cost reduction), not billing administration.</p>
+<h4>Cost Optimization Decision Patterns</h4>
+<div class="tw"><table>
+<tr><th>Scenario</th><th>Cost Tool</th><th>Action</th></tr>
+<tr><td>EC2 consistently &lt;10% CPU</td><td>AWS Compute Optimizer</td><td>Follow right-sizing recommendation. Graviton instances offer 20–40% better price/performance vs x86.</td></tr>
+<tr><td>Identify largest cost drivers</td><td>Cost Explorer by Service/Region/Tag</td><td>Enable cost allocation tags. Group by application tag to identify expensive apps.</td></tr>
+<tr><td>NAT Gateway data processing charges high</td><td>CUR + Athena</td><td>Move S3/DynamoDB traffic to Gateway VPC Endpoints (free). Consolidate subnets to reduce cross-AZ NAT traffic.</td></tr>
+<tr><td>Reduce S3 storage cost</td><td>S3 Storage Lens, S3 Analytics</td><td>Enable Lifecycle rules. Move infrequent data to S3-IA or Glacier Instant Retrieval. Use S3 Intelligent-Tiering for unknown patterns.</td></tr>
+<tr><td>Reduce RDS cost</td><td>Compute Optimizer, RDS recommendations</td><td>Aurora Serverless v2 for spiky workloads. Reserved Instances for predictable (1yr = ~30% savings, 3yr = ~60%).</td></tr>
+<tr><td>Commitment discount for compute</td><td>Savings Plans</td><td>Compute SP: up to 66% off, applies to EC2/Lambda/Fargate across all instance families/Regions. EC2 SP: specific family + Region.</td></tr>
+<tr><td>Budget alerts for teams</td><td>AWS Budgets</td><td>Set cost/usage budgets with SNS/email alerts at 80% and 100% of threshold. Trigger Lambda to stop non-critical EC2 at 100%.</td></tr>
+</table></div>
+</section>
+
+<!-- ══════════ SERVICES ══════════ -->
+<section class="dom" id="services">
+<div class="dh">
+<div class="dnum" style="background:rgba(139,151,179,.1);color:var(--tx2);border:1px solid rgba(139,151,179,.2)">REF</div>
+<div class="dtit"><h2>In-Scope AWS Services — Complete Reference</h2><div class="dwt">All services in scope for SOA-C03</div></div>
+</div>
+<div class="g3">
+<div class="card"><h4>Analytics</h4><span class="tag tb">Athena</span><span class="tag tb">Data Firehose</span></div>
+<div class="card"><h4>App Integration</h4><span class="tag tb">EventBridge</span><span class="tag tb">SNS</span><span class="tag tb">SQS</span><span class="tag tb">Step Functions</span></div>
+<div class="card"><h4>Business Apps</h4><span class="tag ty">Amazon SES</span></div>
+<div class="card"><h4>Compute</h4><span class="tag to">EC2</span><span class="tag to">EC2 Image Builder</span><span class="tag to">Lambda</span></div>
+<div class="card"><h4>Containers</h4><span class="tag tg">ECR</span><span class="tag tg">ECS</span><span class="tag tg">EKS</span></div>
+<div class="card"><h4>Database</h4><span class="tag tp">Aurora</span><span class="tag tp">Aurora Serverless v2</span><span class="tag tp">DynamoDB</span><span class="tag tp">DAX</span><span class="tag tp">ElastiCache</span><span class="tag tp">RDS</span><span class="tag tp">RDS Proxy</span></div>
+<div class="card"><h4>Developer Tools</h4><span class="tag tb">AWS X-Ray</span></div>
+<div class="card"><h4>Financial Mgmt</h4><span class="tag ty">Cost &amp; Usage Reports</span><span class="tag ty">Cost Explorer</span><span class="tag ty">Savings Plans</span></div>
+<div class="card" style="grid-column:span 1"><h4>Migration &amp; Transfer</h4><span class="tag tb">AWS DataSync</span></div>
+</div>
+<div class="g2" style="margin-top:12px">
+<div class="card"><h4>Management &amp; Governance</h4>
+<span class="tag to">Auto Scaling</span><span class="tag to">AWS CDK</span><span class="tag to">CloudFormation</span><span class="tag to">CloudTrail</span><span class="tag to">CloudWatch</span><span class="tag to">Compute Optimizer</span><span class="tag to">AWS Config</span><span class="tag to">Control Tower</span><span class="tag to">Managed Grafana</span><span class="tag to">Managed Prometheus</span><span class="tag to">Organizations</span><span class="tag to">AWS RAM</span><span class="tag to">Service Catalog</span><span class="tag to">SCPs</span><span class="tag to">Systems Manager</span><span class="tag to">Trusted Advisor</span><span class="tag to">VPC IPAM</span>
+</div>
+<div class="card"><h4>Network &amp; Content Delivery</h4>
+<span class="tag tr">App Recovery Controller</span><span class="tag tr">Client VPN</span><span class="tag tr">CloudFront</span><span class="tag tr">Elastic IPs</span><span class="tag tr">Global Accelerator</span><span class="tag tr">PrivateLink</span><span class="tag tr">Route 53</span><span class="tag tr">R53 Resolver DNS Firewall</span><span class="tag tr">Site-to-Site VPN</span><span class="tag tr">Transit Gateway</span><span class="tag tr">Amazon VPC</span><span class="tag tr">VPC Endpoints</span><span class="tag tr">VPC Flow Logs</span><span class="tag tr">VPC Peering</span><span class="tag tr">VPC Reachability Analyzer</span>
+</div>
+</div>
+<div class="g2" style="margin-top:12px">
+<div class="card"><h4>Security, Identity &amp; Compliance</h4>
+<span class="tag tp">ACM</span><span class="tag tp">EC2 Security Groups</span><span class="tag tp">Egress-only IGW</span><span class="tag tp">ELB (ALB/NLB/CLB/GWLB)</span><span class="tag tp">GuardDuty</span><span class="tag tp">IAM Access Analyzer</span><span class="tag tp">IAM Identity Center</span><span class="tag tp">IAM</span><span class="tag tp">Amazon Inspector</span><span class="tag tp">Internet Gateways</span><span class="tag tp">KMS</span><span class="tag tp">Amazon Macie</span><span class="tag tp">Network Firewall</span><span class="tag tp">NAT Gateways</span><span class="tag tp">Network ACLs</span><span class="tag tp">Secrets Manager</span><span class="tag tp">Security Hub</span><span class="tag tp">AWS Shield</span><span class="tag tp">AWS WAF</span>
+</div>
+<div class="card"><h4>Storage</h4>
+<span class="tag tg">AWS Backup</span><span class="tag tg">EBS</span><span class="tag tg">EFS</span><span class="tag tg">FSx</span><span class="tag tg">Amazon S3</span><span class="tag tg">Storage Gateway</span>
+</div>
+</div>
+<div class="co cw" style="margin-top:24px">
+<strong>Exam Scoring: 720/1000 to pass.</strong> Compensatory model — no per-domain minimum. D1 + D2 + D3 = 66% of the exam (~42 of 65 questions). Focus the most study time here. Every question is scenario-based — practice thinking in operational context, not memorizing definitions. Common question pattern: "A company needs X without Y constraint — what do they configure?" Know both what to use AND what not to use.
+</div>
+</section>
+
+</div><!-- /cnt -->
+</main>
+
+<button id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const pgf=document.getElementById('pgf'),st=document.getElementById('st');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  pgf.style.width=(window.scrollY/h*100)+'%';
+  st.classList.toggle('show',window.scrollY>500);
+},{passive:true});
+
+const sects=Array.from(document.querySelectorAll('[id]'));
+const links=document.querySelectorAll('#sb a[href^="#"]');
+function updateNav(){
+  let cur='';
+  sects.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+}
+window.addEventListener('scroll',updateNav,{passive:true});
+updateNav();
+
+function filterNav(v){
+  v=v.toLowerCase();
+  links.forEach(a=>{
+    a.style.display=(v===''||a.textContent.toLowerCase().includes(v))?'':'none';
+  });
+}
+
+function toggleGap(btn){
+  const body=document.getElementById('gap-body');
+  const open=body.classList.toggle('open');
+  btn.setAttribute('aria-expanded',open);
+  btn.querySelector('.gap-toggle-meta').textContent=open?'— click to collapse':'— click to expand';
+}
+function hq(el,correct){
+  el.closest('.qo').querySelectorAll('li').forEach(li=>li.classList.remove('cor','wro'));
+  el.classList.add(correct?'cor':'wro');
+}
+function ta(btn){
+  const a=btn.nextElementSibling;
+  a.classList.toggle('show');
+  btn.textContent=a.classList.contains('show')?'Hide Explanation':'Show Explanation';
+}
+</script>
+</body>
+</html>
